@@ -1,0 +1,26 @@
+{
+  "name": "lesbigboss",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/40-60/lesBigBoss#readme",
+  "bugs": {
+    "url": "https://github.com/40-60/lesBigBoss/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/40-60/lesBigBoss.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack",
+    "dev": "webpack --watch --progress"
+  },
+  "devDependencies": {
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1"
+  }
+}
