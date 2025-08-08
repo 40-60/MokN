@@ -1,5 +1,3 @@
-require("./animations/auto-slider.js")();
-
 // Smooth scrolling with Lenis
 const lenis = new Lenis({
   smooth: true,
@@ -17,7 +15,6 @@ requestAnimationFrame(raf);
 document.addEventListener("DOMContentLoaded", () => {
   if (typeof window.gsap === "undefined")
     document.documentElement.classList.add("gsap-not-found");
-  gsap.registerPlugin(ScrollTrigger, SplitText);
 });
 
 // Prevent flickering for elements with attributes

@@ -58,7 +58,22 @@ Remplacez `[CHEMIN VERS LE FICHIER]` par le chemin du fichier à rafraîchir.
 
 ## Intégration dans Webflow
 
-Pour intégrer une animation GSAP dans une page Webflow, ajoutez ce script dans la page :
+Pour intégrer une animation GSAP dans une page Webflow, ajoutez ce script à l'échelle du site :
+
+<script>
+  const isPreview = location.href.includes("canvas");
+  const isDev = localStorage.getItem("devMode") === "true";
+  const globalScript = document.createElement("script");
+
+  globalScript.src = isDev || isPreview
+    ? "http://localhost:3000/global.js"
+    : "https://cdn.jsdelivr.net/gh/40-60/lesBigBoss/dist/global.js";
+
+  document.head.appendChild(globalScript);
+  console.log("[Chargement JS] Source :", globalScript.src);
+</script>
+
+Et ce script à l'échelle de chaque page :
 
 ```html
 <script>
