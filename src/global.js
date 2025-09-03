@@ -19,13 +19,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Prevent flickering for elements with attributes
 // gsap.set("[prevent-flicker], [text-animation]", { visibility: "visible" });
-
-// Après le chargement du Lottie
-const lottieContainer = document.querySelector(".burger_icon svg");
-if (lottieContainer) {
-  lottieContainer.style.color = "currentColor";
-  // Pour forcer tous les fills à suivre currentColor
-  lottieContainer.querySelectorAll("[fill]").forEach((el) => {
-    el.setAttribute("fill", "currentColor");
-  });
-}

@@ -80,7 +80,7 @@ gsap.to(
 );
 
 // Animation cross-fade optimisée pour tous les éléments [cross-fade]
-(() => {
+(function () {
   const crossFades = Array.from(document.querySelectorAll("[cross-fade]"));
   if (crossFades.length < 2) return;
   // S'assure que le parent est en position relative
