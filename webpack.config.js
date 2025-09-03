@@ -11,6 +11,9 @@ module.exports = {
 
     // Animations
     ["animations/animation-template"]: "./src/animations/animation-template.js",
+
+    // Image sequences
+    // Les images sont copiées via CopyWebpackPlugin (voir plus bas)
   },
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -21,4 +24,14 @@ module.exports = {
     umdNamedDefine: true,
     clean: true,
   },
+  plugins: [
+    new (require("copy-webpack-plugin"))({
+      patterns: [
+        {
+          from: "src/img_sequences",
+          to: "img_sequences",
+        },
+      ],
+    }),
+  ],
 };

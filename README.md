@@ -31,7 +31,8 @@ Ouvrez ensuite deux terminaux et lancez les commandes suivantes :
 Vous pouvez consulter l'ensemble des fichiers générés :
 
 - en local sur [http://localhost:3000](http://localhost:3000)
-- ou en ligne sur [https://purge.jsdelivr.net/gh/40-60/lesBigBoss/dist](https://purge.jsdelivr.net/gh/40-60/lesBigBoss/dist)
+- ou en ligne sur [https://purge.jsdelivr.net/gh/40-60/lesBigBoss/dist](https://purge.jsdelivr.net/gh/
+  40-60/lesBigBoss/dist)
 
 ---
 
@@ -50,9 +51,11 @@ Après un push sur GitHub, il se peut que les fichiers du dossier `dist` ne soie
 
 Pour forcer la purge du cache, rendez-vous à l'adresse suivante :
 
-`https://purge.jsdelivr.net/gh/40-60/lesBigBoss/dist/[CHEMIN VERS LE FICHIER]`
+`https://purge.jsdelivr.net/gh/40-60/lesBigBoss@master/dist/[CHEMIN VERS LE FICHIER]`
 
 Remplacez `[CHEMIN VERS LE FICHIER]` par le chemin du fichier à rafraîchir.
+
+Enfin recharger la même page sur le CDN pour voir si ça a été mis à jour.
 
 ---
 
