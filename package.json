@@ -23,5 +23,8 @@
     "copy-webpack-plugin": "^13.0.1",
     "webpack": "^5.99.9",
     "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "lottie-web": "^5.13.0"
   }
 }

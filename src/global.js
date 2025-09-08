@@ -18,4 +18,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Prevent flickering for elements with attributes
-// gsap.set("[prevent-flicker], [text-animation]", { visibility: "visible" });
+gsap.set("[prevent-flicker], [text-animation]", { visibility: "visible" });

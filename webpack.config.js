@@ -8,9 +8,11 @@ module.exports = {
     // Pages
     ["pages/accueil"]: "./src/pages/accueil.js",
     ["pages/test-page"]: "./src/test-page.js",
+    ["pages/baits"]: "./src/pages/baits.js",
 
     // Animations
     ["animations/animation-template"]: "./src/animations/animation-template.js",
+    ["animations/home-slider"]: "./src/animations/home-slider.js",
 
     // Image sequences
     // Les images sont copiées via CopyWebpackPlugin (voir plus bas)

@@ -1,10 +1,11 @@
 require("../animations/count-up.js")();
+require("../animations/home-slider.js")();
 
 let frameCount = 399,
   urls = new Array(frameCount).fill().map((o, i) => {
     // Format the number with leading zeros to match Mokn_Intro000.webp, Mokn_Intro001.webp, etc.
     const num = i.toString().padStart(3, "0");
-    return `http://localhost:3000/img_sequences/home_intro/Mokn_Intro${num}.webp`;
+    return `https://cdn.jsdelivr.net/gh/40-60/mokn@master/dist/img_sequences/home_intro/Mokn_Intro${num}.webp`;
   });
 
 function imageSequence(config) {
@@ -40,7 +41,7 @@ const loopFrameCount = 120;
 const loopDuration = loopFrameCount / fps;
 const loopUrls = new Array(loopFrameCount).fill().map((o, i) => {
   const num = (i + 1).toString().padStart(3, "0");
-  return `http://localhost:3000/img_sequences/home_loop/home_loop${num}.webp`;
+  return `https://cdn.jsdelivr.net/gh/40-60/mokn@master/dist/img_sequences/home_loop/home_loop${num}.webp`;
 });
 
 // Lance la première séquence, puis la séquence en boucle
