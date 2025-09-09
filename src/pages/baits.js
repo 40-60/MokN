@@ -125,6 +125,49 @@ nextBtn.addEventListener("click", () => {
 
 // Initial state
 updateButtonStates();
+
+// Gestion du swipe sur mobile pour .circular_carousel_mask
+const carouselMask = document.querySelector(".circular_carousel_mask");
+let touchStartX = null;
+let touchEndX = null;
+
+if (carouselMask) {
+  carouselMask.addEventListener("touchstart", function (e) {
+    if (window.innerWidth > 767) return;
+    touchStartX = e.changedTouches[0].screenX;
+  });
+  carouselMask.addEventListener("touchend", function (e) {
+    if (window.innerWidth > 767) return;
+    touchEndX = e.changedTouches[0].screenX;
+    if (touchStartX !== null && touchEndX !== null) {
+      const diff = touchEndX - touchStartX;
+      if (Math.abs(diff) > 40) {
+        // Seuil de swipe
+        if (diff > 0) {
+          // Swipe vers la droite: prev
+          if (activeIndex > 0) {
+            handleClick(1);
+            updateButtonStates();
+          }
+        } else {
+          // Swipe vers la gauche: next
+          if (activeIndex < desktopDots.length) {
+            handleClick(-1);
+            updateButtonStates();
+          }
+        }
+      }
+    }
+    touchStartX = null;
+    touchEndX = null;
+  });
+}
+
+// Met à jour l'affichage lors du redimensionnement de la fenêtre
+window.addEventListener("resize", () => {
+  updateTransform();
+  updateButtonStates();
+});
 updateTransform();
 
 // Initial state
