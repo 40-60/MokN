@@ -1,16 +1,25 @@
 const prevBtn = document.getElementById("prev-btn");
 const nextBtn = document.getElementById("next-btn");
 const circularCarousel = document.querySelector(".circular_carousel_list");
-const desktopDots = document
-  .querySelector(".circular_carousel_list")
-  .querySelectorAll(".circular_carousel_dot");
-const mobileDots = document.querySelectorAll(
-  ".circular_carousel_dot.is-mobile"
-);
-const contents = document.querySelectorAll(".circular_carousel_content");
-
 const mobileDotsWrapper = document.querySelector(".mobile_dots_wrapper");
 const carouselItems = document.querySelectorAll(".circular_carousel_item");
+const contents = document.querySelectorAll(".circular_carousel_content");
+const paginationDots = document
+  .querySelector(".circular_carousel_nav")
+  .querySelectorAll(".slider-dot");
+
+const desktopDots = document.querySelectorAll(
+  ".circular_carousel_dot.is-desktop .circular_carousel_dot_icon"
+);
+const desktopDotsLight = document.querySelectorAll(
+  ".circular_carousel_dot.is-desktop .circular_carousel_dot_light"
+);
+const mobileDots = document.querySelectorAll(
+  ".circular_carousel_dot.is-mobile .circular_carousel_dot_icon"
+);
+const mobileDotsLight = document.querySelectorAll(
+  ".circular_carousel_dot.is-mobile .circular_carousel_dot_light"
+);
 
 let rotation = 0;
 let activeIndex = 0;
@@ -41,11 +50,26 @@ function setContentColors(content, isActive) {
 }
 
 function updateTransform() {
-  console.log("activeIndex:", activeIndex);
+  paginationDots.forEach((dot, i) => {
+    if (i === activeIndex) {
+      dot.classList.add("is-active");
+    } else {
+      dot.classList.remove("is-active");
+    }
+  });
+
   if (window.innerWidth >= 767) {
     circularCarousel.style.transform = `rotateZ(${rotation}deg)`;
 
     desktopDots.forEach((dot, i) => {
+      if (i === activeIndex) {
+        dot.classList.add("is-active");
+      } else {
+        dot.classList.remove("is-active");
+      }
+    });
+
+    desktopDotsLight.forEach((dot, i) => {
       if (i === activeIndex) {
         dot.classList.add("is-active");
       } else {
@@ -77,6 +101,13 @@ function updateTransform() {
         dot.classList.remove("is-active");
       }
     });
+    mobileDotsLight.forEach((dot, i) => {
+      if (i === activeIndex) {
+        dot.classList.add("is-active");
+      } else {
+        dot.classList.remove("is-active");
+      }
+    });
     // Gère les boutons disabled
     if (activeIndex === 0) {
       prevBtn.classList.add("is-disabled");
@@ -95,7 +126,6 @@ function handleClick(direction) {
   rotation += direction * 30;
   activeIndex -= direction;
   updateTransform();
-  console.log("clicked");
 }
 
 function updateButtonStates() {
@@ -121,6 +151,18 @@ nextBtn.addEventListener("click", () => {
   if (activeIndex === 5) return;
   handleClick(-1);
   updateButtonStates();
+});
+
+paginationDots.forEach((dot, i) => {
+  dot.addEventListener("click", () => {
+    if (i === activeIndex) return;
+    const direction = i < activeIndex ? 1 : -1;
+    const steps = Math.abs(i - activeIndex);
+    rotation += direction * 30 * steps;
+    activeIndex = i;
+    updateTransform();
+    updateButtonStates();
+  });
 });
 
 // Initial state

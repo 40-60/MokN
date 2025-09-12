@@ -1,4 +1,3 @@
-require("../animations/count-up.js")();
 require("../animations/home-slider.js")();
 
 let frameCount = 399,

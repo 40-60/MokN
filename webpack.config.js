@@ -9,6 +9,7 @@ module.exports = {
     ["pages/accueil"]: "./src/pages/accueil.js",
     ["pages/test-page"]: "./src/test-page.js",
     ["pages/baits"]: "./src/pages/baits.js",
+    ["pages/about"]: "./src/pages/about.js",
 
     // Animations
     ["animations/animation-template"]: "./src/animations/animation-template.js",

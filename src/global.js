@@ -1,14 +1,16 @@
 // Smooth scrolling with Lenis
 const lenis = new Lenis({
-  smooth: true,
-  lerp: 0.5,
+  // Valeur entre 0 et 1
+  // Plus la valeur est faible, plus le scroll sera fluide
+  lerp: 0.2,
+  // Plus la valeur est haute, plus le défilement sera rapide
+  wheelMultiplier: 1,
 });
 
 function raf(time) {
   lenis.raf(time);
   requestAnimationFrame(raf);
 }
-
 requestAnimationFrame(raf);
 
 // Check if GSAP and plugins are loaded
