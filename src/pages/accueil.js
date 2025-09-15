@@ -1,4 +1,5 @@
 require("../animations/home-slider.js")();
+require("../animations/home-svg-path.js")();
 
 let frameCount = 399,
   urls = new Array(frameCount).fill().map((o, i) => {
@@ -130,22 +131,3 @@ gsap.to(
       );
   }
 })();
-
-// Animation path
-const path = document.querySelector("#scrollPath");
-const length = path.getTotalLength();
-
-path.style.strokeDasharray = length;
-path.style.strokeDashoffset = length;
-
-gsap.registerPlugin(ScrollTrigger);
-
-gsap.to(path, {
-  strokeDashoffset: 0,
-  scrollTrigger: {
-    trigger: path,
-    start: "top top",
-    end: "bottom top",
-    scrub: true,
-  },
-});

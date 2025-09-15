@@ -1,95 +1,131 @@
 const lottieWeb = require("lottie-web");
 
 module.exports = function slider() {
+  const lottieJsonUrls = [
+    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68c7d0ea5d9c82b60265d1de_slider_lottie_1.json",
+    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68c7d0ea1dea2371364d1691_slider_lottie_2.json",
+    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68c7d0eb5e67b7822166786d_slider_lottie_3.json",
+    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68c7d0ead0fc7ffcd12ebe96_slider_lottie_4.json",
+    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68c7d0eb08a0af94ec94894c_slider_lottie_5.json",
+    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68c7d0eb5521e89cbf81ed27_slider_lottie_6.json",
+  ];
+
   const lottieWrapper = document.querySelector(".slider_lottie_wrapper");
-  const sliderH2Wrapper = document.querySelector(".slider_h2_wrapper");
   const sliderH2 = document.querySelectorAll("[slider-h2]");
   const prevSlide = document.querySelector("[slider-prev]");
   const nextSlide = document.querySelector("[slider-next]");
-  const lottieJsonUrls = [
-    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68b83f8e6e2ef58c60c08fde_Lottielab%20Chart%20Home%20Page.json",
-    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68b83f8e48f9a4b6ff16372a_Card%20Solo%20(1).json",
-    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68b83f8d19c71c65d7ba9ac7_Card%20Stack%20Home%20(2).json",
-  ];
-  let step = 0;
-  let lottieInstance = null;
+  const dots = document
+    .querySelector(".section_home_slider")
+    .querySelectorAll(".slider-dot");
 
-  function showLottie(index, options = {}) {
-    // Remove previous animation
-    lottieWrapper.innerHTML = "";
-    // Create a new container for Lottie
+  let step = 0;
+  lottieWrapper.innerHTML = "";
+  const lottieContainers = [];
+  const lottieInstances = [];
+
+  // Helper: update H2 classes
+  function updateH2Classes(current, next) {
+    sliderH2[current].classList.remove("is-active");
+    sliderH2[current].classList.add("is-done");
+    sliderH2[next].classList.add("is-active");
+  }
+
+  // Helper: update dot classes
+  function updateDotClasses(current, next) {
+    if (dots && dots.length) {
+      dots[current].classList.remove("is-active");
+      dots[next].classList.add("is-active");
+    }
+  }
+
+  // Helper: update lottie containers
+  function updateLottieContainers(current, next) {
+    lottieContainers[current].classList.add("hide");
+    lottieContainers[next].classList.remove("hide");
+  }
+
+  // Helper: play lottie
+  function playLottie(idx) {
+    if (
+      lottieInstances[idx] &&
+      typeof lottieInstances[idx].goToAndPlay === "function"
+    ) {
+      lottieInstances[idx].goToAndPlay(0, true);
+    }
+  }
+
+  // Preload lotties
+  lottieJsonUrls.forEach((url, i) => {
     const container = document.createElement("div");
+    container.classList.add("slider_lottie");
+    if (i !== 0) container.classList.add("hide");
     container.style.width = "100%";
     container.style.height = "100%";
     lottieWrapper.appendChild(container);
-    // Load the animation
-    lottieInstance = lottieWeb.loadAnimation({
-      container: container,
+    const instance = lottieWeb.loadAnimation({
+      container,
       renderer: "svg",
       loop: false,
       autoplay: false,
-      path: lottieJsonUrls[index],
+      path: url,
     });
-    lottieInstance.addEventListener("DOMLoaded", function () {
-      if (options.reverse) {
-        lottieInstance.setDirection(-1);
-        lottieInstance.goToAndPlay(lottieInstance.totalFrames, true);
-        lottieInstance.addEventListener("complete", function handler() {
-          // Après reverse, afficher le précédent à la dernière frame sans animation
-          lottieInstance.removeEventListener("complete", handler);
-          showLottie(index - 1, { showLastFrame: true });
-        });
-      } else if (options.showLastFrame) {
-        lottieInstance.goToAndStop(lottieInstance.totalFrames, true);
-      } else {
-        lottieInstance.setDirection(1);
-        lottieInstance.goToAndPlay(0, true);
-      }
-    });
-  }
-
-  // Show the first Lottie on load
-  showLottie(step);
-
-  sliderH2Wrapper.style.height = sliderH2[0].offsetHeight + "px";
-
-  document.addEventListener("resize", () => {
-    sliderH2Wrapper.style.height = sliderH2[step].offsetHeight + "px";
+    lottieContainers.push(container);
+    lottieInstances.push(instance);
   });
 
-  sliderH2.forEach((el, i) => {
-    el.style.transition = "opacity 0.5s ease, transform 0.5s ease";
-    el.style.position = "absolute";
+  // Play the first lottie when lottieWrapper top is at center of viewport
+  if (lottieInstances[0] && typeof gsap !== "undefined") {
+    gsap.registerPlugin(
+      gsap.plugins && gsap.plugins.ScrollTrigger
+        ? gsap.plugins.ScrollTrigger
+        : window.ScrollTrigger
+    );
+    gsap.to(
+      {},
+      {
+        scrollTrigger: {
+          trigger: lottieWrapper,
+          start: "top center",
+          once: true,
+          onEnter: () => playLottie(0),
+        },
+      }
+    );
+  }
 
-    if (i === 0) return; // skip the first element
-    el.style.opacity = 0;
-    el.style.transform = "translateY(100%)";
+  // Init H2 classes
+  sliderH2.forEach((el, i) => {
+    el.classList.remove("is-active", "is-done");
+    if (i === 0) el.classList.add("is-active");
   });
 
   nextSlide.addEventListener("click", () => {
-    sliderH2[step].style.opacity = 0;
-    sliderH2[step].style.transform = "translateY(-100%)";
-    sliderH2[step + 1].style.opacity = 1;
-    sliderH2[step + 1].style.transform = "translateY(0)";
+    if (step >= lottieJsonUrls.length - 1) return;
+    updateH2Classes(step, step + 1);
+    updateLottieContainers(step, step + 1);
+    updateDotClasses(step, step + 1);
     step++;
-    if (step >= lottieJsonUrls.length) {
-      nextSlide.classList.toggle("is-disabled");
-      return;
-    }
-    showLottie(step);
+    playLottie(step);
+    nextSlide.classList.toggle(
+      "is-disabled",
+      step >= lottieJsonUrls.length - 1
+    );
+    prevSlide.classList.remove("is-disabled");
   });
 
   prevSlide.addEventListener("click", () => {
-    sliderH2[step].style.opacity = 0;
-    sliderH2[step].style.transform = "translateY(100%)";
-    sliderH2[step - 1].style.opacity = 1;
-    sliderH2[step - 1].style.transform = "translateY(0)";
-    // On joue le lottie actuel en reverse, puis on affiche le précédent à la dernière frame
-    showLottie(step, { reverse: true });
-    step--;
-    if (step <= 0) {
-      prevSlide.classList.toggle("is-disabled");
-      return;
-    }
+    if (step <= 0) return;
+    lottieWrapper.classList.add("opacity-0");
+    setTimeout(() => {
+      sliderH2[step].classList.remove("is-active", "is-done");
+      sliderH2[step - 1].classList.remove("is-done");
+      sliderH2[step - 1].classList.add("is-active");
+      updateLottieContainers(step, step - 1);
+      updateDotClasses(step, step - 1);
+      step--;
+      lottieWrapper.classList.remove("opacity-0");
+      prevSlide.classList.toggle("is-disabled", step <= 0);
+      nextSlide.classList.remove("is-disabled");
+    }, 200);
   });
 };

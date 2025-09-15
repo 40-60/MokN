@@ -14,6 +14,9 @@ module.exports = {
     // Animations
     ["animations/animation-template"]: "./src/animations/animation-template.js",
     ["animations/home-slider"]: "./src/animations/home-slider.js",
+    ["animations/home-svg-path"]: "./src/animations/home-svg-path.js",
+    ["animations/offer-hero-3d"]: "./src/animations/offer-hero-3d.js",
+    ["animations/offer-hero-3d"]: "./src/animations/offer-hero-3d.js",
 
     // Image sequences
     // Les images sont copiées via CopyWebpackPlugin (voir plus bas)
