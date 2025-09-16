@@ -1,26 +1,34 @@
 const path = require("path");
+const fs = require("fs");
+
+// Fonction pour scanner récursivement les fichiers JS
+function scanJsFiles(dir, baseDir = "src", entries = {}) {
+  const files = fs.readdirSync(dir);
+
+  files.forEach((file) => {
+    const fullPath = path.join(dir, file);
+    const stat = fs.statSync(fullPath);
+
+    if (stat.isDirectory()) {
+      // Récursion pour les sous-dossiers
+      scanJsFiles(fullPath, baseDir, entries);
+    } else if (file.endsWith(".js")) {
+      // Créer le nom d'entrée en supprimant l'extension et en gardant la structure
+      const relativePath = path.relative(baseDir, fullPath);
+      const entryName = relativePath.replace(/\.js$/, "");
+      entries[entryName] = fullPath;
+    }
+  });
+
+  return entries;
+}
+
+// Générer automatiquement toutes les entrées
+const entries = scanJsFiles(path.join(__dirname, "src"));
 
 module.exports = {
   mode: "production",
-  entry: {
-    ["global"]: "./src/global.js",
-
-    // Pages
-    ["pages/accueil"]: "./src/pages/accueil.js",
-    ["pages/test-page"]: "./src/test-page.js",
-    ["pages/baits"]: "./src/pages/baits.js",
-    ["pages/about"]: "./src/pages/about.js",
-
-    // Animations
-    ["animations/animation-template"]: "./src/animations/animation-template.js",
-    ["animations/home-slider"]: "./src/animations/home-slider.js",
-    ["animations/home-svg-path"]: "./src/animations/home-svg-path.js",
-    ["animations/offer-hero-3d"]: "./src/animations/offer-hero-3d.js",
-    ["animations/offer-hero-3d"]: "./src/animations/offer-hero-3d.js",
-
-    // Image sequences
-    // Les images sont copiées via CopyWebpackPlugin (voir plus bas)
-  },
+  entry: entries,
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "[name].js",

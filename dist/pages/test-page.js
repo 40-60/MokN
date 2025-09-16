@@ -1,1 +1,0 @@
-!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports={}:"function"==typeof define&&define.amd?define("pages/test-page",[],t):"object"==typeof exports?exports["pages/test-page"]={}:e["pages/test-page"]={}}(this,()=>({}));

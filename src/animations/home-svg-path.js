@@ -43,5 +43,21 @@ module.exports = function homeSvgPathAnimation() {
         scrub: true,
       },
     });
+
+    // Set initial state
+    gsap.set(".implement_light", { opacity: 0 });
+
+    // Animate to visible when triggered
+    gsap.to(".implement_light", {
+      opacity: 1,
+      ease: "power2.inOut",
+      duration: 0.7,
+      scrollTrigger: {
+        trigger: path,
+        start: "bottom 65%",
+        end: "bottom center",
+        toggleActions: "play none none reverse",
+      },
+    });
   }
 };

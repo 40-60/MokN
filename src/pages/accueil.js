@@ -102,6 +102,7 @@ gsap.to(
       zIndex: i === 0 ? 2 : 1,
     });
   });
+
   // Animation dynamique pour chaque cross-fade
   for (let i = 0; i < crossFades.length - 1; i++) {
     gsap
