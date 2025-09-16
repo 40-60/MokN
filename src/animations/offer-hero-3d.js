@@ -7,9 +7,9 @@ module.exports = function template() {
   }
 
   // Configuration de la séquence d'images
-  const frameCount = 109; // de 0 à 108
+  const frameCount = 96; // de 0 à 108
   const urls = new Array(frameCount).fill().map((o, i) => {
-    return `http://localhost:3000/img_sequences/baits_decamouflage/decamouflage${i}.webp`;
+    return `https://cdn.jsdelivr.net/gh/40-60/mokn@master/dist/img_sequences/baits/reveal/reveal${i}.webp`;
   });
 
   // Fonction pour créer la séquence d'images
@@ -62,9 +62,11 @@ module.exports = function template() {
     });
 
     // Configuration de la séquence de boucle
-    const loopFrameCount = 58;
+    const loopFrameCount = 49;
+    const loopFPS = 25; // Définir les FPS souhaités
+    const loopDuration = loopFrameCount / loopFPS; // Calculer la durée
     const loopUrls = new Array(loopFrameCount).fill().map((o, i) => {
-      return `http://localhost:3000/img_sequences/baits_loop/loop${i}.webp`;
+      return `https://cdn.jsdelivr.net/gh/40-60/mokn@master/dist/img_sequences/baits/loop/loop${i}.webp`;
     });
 
     let loopImages = [];
@@ -109,7 +111,7 @@ module.exports = function template() {
 
       loopAnimation = gsap.to(loopPlayhead, {
         frame: loopFrameCount - 1,
-        duration: 2,
+        duration: loopDuration,
         ease: "none",
         repeat: -1, // Boucle infinie
         onUpdate: updateLoopImage,
@@ -122,7 +124,7 @@ module.exports = function template() {
     // Initialiser l'animation de boucle en préparation
     loopAnimation = gsap.to(loopPlayhead, {
       frame: loopFrameCount - 1,
-      duration: 2,
+      duration: loopDuration,
       ease: "none",
       repeat: -1,
       onUpdate: updateLoopImage,
