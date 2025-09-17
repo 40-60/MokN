@@ -38,6 +38,11 @@ module.exports = {
     umdNamedDefine: true,
     clean: true,
   },
+  performance: {
+    maxAssetSize: 100000000, // 100MB
+    maxEntrypointSize: 100000000, // 100MB
+    hints: "warning", // or "error" or false
+  },
   plugins: [
     new (require("copy-webpack-plugin"))({
       patterns: [
