@@ -1,5 +1,5 @@
 module.exports = function template() {
-  const sequenceWrapper = document.querySelector(".offer_hero_3d");
+  const sequenceWrapper = document.querySelector("[baits-3d-wrapper]");
 
   if (!sequenceWrapper || !window.gsap || !window.ScrollTrigger) {
     console.warn("Élément .offer_hero_3d, GSAP ou ScrollTrigger non trouvé");

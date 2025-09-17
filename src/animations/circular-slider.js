@@ -142,14 +142,29 @@ module.exports = function template() {
     }
   }
 
+  function addPulseEffect() {
+    const carouselImages = document.querySelectorAll(".circular_carousel_img");
+    carouselImages.forEach((img) => {
+      img.classList.add("pulse");
+    });
+
+    setTimeout(() => {
+      carouselImages.forEach((img) => {
+        img.classList.remove("pulse");
+      });
+    }, 200);
+  }
+
   prevBtn.addEventListener("click", () => {
     if (activeIndex === 0) return;
+    addPulseEffect();
     handleClick(1);
     updateButtonStates();
   });
 
   nextBtn.addEventListener("click", () => {
     if (activeIndex === 5) return;
+    addPulseEffect();
     handleClick(-1);
     updateButtonStates();
   });
@@ -215,4 +230,85 @@ module.exports = function template() {
 
   // Initial state
   updateButtonStates();
+
+  // 3D Loop Animation for circular slider
+  const circularSlider3DWrapper = document.querySelector(
+    "[circular-slider-3d]"
+  );
+
+  if (circularSlider3DWrapper) {
+    // Configuration de la séquence de boucle
+    const loopFrameCount = 49;
+    const loopFPS = 25; // Définir les FPS souhaités
+    const loopDuration = loopFrameCount / loopFPS; // Calculer la durée
+    const loopUrls = new Array(loopFrameCount).fill().map((o, i) => {
+      return `https://cdn.jsdelivr.net/gh/40-60/mokn@master/dist/img_sequences/baits/loop/loop${i}.webp`;
+    });
+
+    // Créer le canvas pour la boucle
+    let loopCanvas = document.createElement("canvas");
+    let loopCtx = loopCanvas.getContext("2d");
+
+    // Nettoyer le contenu existant et ajouter le canvas
+    circularSlider3DWrapper.innerHTML = "";
+    circularSlider3DWrapper.appendChild(loopCanvas);
+
+    // Styliser le canvas avec la classe .img-contain
+    loopCanvas.classList.add("img-contain");
+
+    let loopImages = [];
+    let loopAnimation = null;
+    let loopPlayhead = { frame: 0 };
+
+    // Précharger les images de la boucle
+    const preloadLoopImages = () => {
+      loopImages = loopUrls.map((url) => {
+        let img = new Image();
+        img.src = url;
+        return img;
+      });
+    };
+
+    const updateLoopImage = () => {
+      const currentFrame = Math.round(loopPlayhead.frame);
+      if (loopImages[currentFrame] && loopImages[currentFrame].complete) {
+        if (
+          loopCanvas.width !== loopImages[currentFrame].width ||
+          loopCanvas.height !== loopImages[currentFrame].height
+        ) {
+          loopCanvas.width = loopImages[currentFrame].width;
+          loopCanvas.height = loopImages[currentFrame].height;
+        }
+        loopCtx.clearRect(0, 0, loopCanvas.width, loopCanvas.height);
+        loopCtx.drawImage(loopImages[currentFrame], 0, 0);
+      }
+    };
+
+    // Fonction pour démarrer la séquence en boucle
+    const startLoopSequence = () => {
+      if (loopAnimation) loopAnimation.kill();
+
+      // Reset et affichage immédiat de la première image de boucle
+      loopPlayhead.frame = 0;
+      updateLoopImage();
+
+      loopAnimation = gsap.to(loopPlayhead, {
+        frame: loopFrameCount - 1,
+        duration: loopDuration,
+        ease: "none",
+        repeat: -1, // Boucle infinie
+        onUpdate: updateLoopImage,
+      });
+    };
+
+    // Précharger les images de la boucle
+    preloadLoopImages();
+
+    // Démarrer l'animation de boucle
+    if (window.gsap) {
+      startLoopSequence();
+    } else {
+      console.warn("GSAP not found for circular slider 3D loop");
+    }
+  }
 };
