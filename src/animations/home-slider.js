@@ -85,7 +85,7 @@ module.exports = function slider() {
       {
         scrollTrigger: {
           trigger: lottieWrapper,
-          start: "top center",
+          start: "top 70%",
           once: true,
           onEnter: () => playLottie(0),
         },

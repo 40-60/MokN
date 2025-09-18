@@ -1,6 +1,6 @@
 module.exports = function homeSvgPathAnimation() {
   // Animation path
-  const path = document.querySelector("#scrollPath");
+  const path = document.querySelector("#scroll-path");
   const pathLight = document.querySelector(".path_light");
 
   if (path && pathLight) {
@@ -10,6 +10,10 @@ module.exports = function homeSvgPathAnimation() {
     path.style.strokeDasharray = length;
     path.style.strokeDashoffset = length;
 
+    // Performance optimizations
+    path.style.willChange = "stroke-dashoffset";
+    pathLight.style.willChange = "transform";
+
     gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
     // Animate the stroke dash offset
@@ -17,9 +21,9 @@ module.exports = function homeSvgPathAnimation() {
       strokeDashoffset: 0,
       ease: "none",
       scrollTrigger: {
-        trigger: path,
-        start: "top center",
-        end: "bottom center",
+        trigger: "#section-features",
+        start: "top bottom",
+        end: "bottom bottom",
         scrub: true,
         // onUpdate: (self) => {
         //   const percent = Math.round(self.progress * 100);
@@ -37,9 +41,9 @@ module.exports = function homeSvgPathAnimation() {
       },
       ease: "none",
       scrollTrigger: {
-        trigger: path,
-        start: "top center",
-        end: "bottom center",
+        trigger: "#section-features",
+        start: "top bottom",
+        end: "bottom bottom",
         scrub: true,
       },
     });

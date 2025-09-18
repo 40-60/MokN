@@ -212,6 +212,12 @@ const initImageSequence = async () => {
   await preloadBatch(urls.slice(0, 200), 5);
   await new Promise((resolve) => setTimeout(resolve, 500));
 
+  // Masquer le placeholder avant de commencer l'animation
+  const placeholder = document.querySelector("#hero-placeholder-img");
+  if (placeholder) {
+    placeholder.style.display = "none";
+  }
+
   // 4. Démarrage de l'animation avec callback optimisé
   const startLoop = () => {
     if (!isLoopLoaded) return setTimeout(startLoop, 100);
@@ -263,55 +269,61 @@ gsap.to(
   }
 );
 
-// Animation cross-fade optimisée pour tous les éléments [cross-fade]
-(function () {
-  const crossFades = Array.from(document.querySelectorAll("[cross-fade]"));
-  if (crossFades.length < 2) return;
-  // S'assure que le parent est en position relative
-  const parent = crossFades[0].parentElement;
-  if (parent && getComputedStyle(parent).position === "static") {
-    parent.style.position = "relative";
-  }
-  // Style de base pour tous
-  crossFades.forEach((el, i) => {
-    el.style.position = "absolute";
-    el.style.top = 0;
-    el.style.left = 0;
-    el.style.width = "100%";
-    el.style.transition = "none";
-    gsap.set(el, {
-      y: i === 0 ? 0 : "150%",
-      opacity: i === 0 ? 1 : 0,
-      zIndex: i === 0 ? 2 : 1,
-    });
-  });
+const crossFades = Array.from(document.querySelectorAll("[cross-fade]"));
 
-  // Animation dynamique pour chaque cross-fade
-  for (let i = 0; i < crossFades.length - 1; i++) {
-    gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: `top+=${((i + 1) * height) / crossFades.length} bottom`,
-          toggleActions: "play none none reverse",
-          invalidateOnRefresh: true,
-        },
-      })
-      .to(
-        crossFades[i],
-        {
-          y: "-150%",
-          opacity: 0,
-          zIndex: 1,
-          duration: 0.7,
-          ease: "power2.inOut",
-        },
-        0
-      )
-      .to(
-        crossFades[i + 1],
-        { y: "0%", opacity: 1, zIndex: 2, duration: 0.7, ease: "power2.inOut" },
-        0
-      );
-  }
-})();
+crossFades.forEach((el) => {
+  el.style.position = "absolute";
+});
+
+// Animation cross-fade optimisée pour tous les éléments [cross-fade]
+// (function () {
+//   const crossFades = Array.from(document.querySelectorAll("[cross-fade]"));
+//   if (crossFades.length < 2) return;
+//   // S'assure que le parent est en position relative
+//   const parent = crossFades[0].parentElement;
+//   if (parent && getComputedStyle(parent).position === "static") {
+//     parent.style.position = "relative";
+//   }
+//   // Style de base pour tous
+//   crossFades.forEach((el, i) => {
+//     el.style.position = "absolute";
+//     // el.style.top = 0;
+//     // el.style.left = 0;
+//     el.style.width = "100%";
+//     el.style.transition = "none";
+//     gsap.set(el, {
+//       y: i === 0 ? 0 : "150%",
+//       opacity: i === 0 ? 1 : 0,
+//       zIndex: i === 0 ? 2 : 1,
+//     });
+//   });
+
+//   // Animation dynamique pour chaque cross-fade
+//   for (let i = 0; i < crossFades.length - 1; i++) {
+//     gsap
+//       .timeline({
+//         scrollTrigger: {
+//           trigger: section,
+//           start: `top+=${((i + 1) * height) / crossFades.length} bottom`,
+//           toggleActions: "play none none reverse",
+//           invalidateOnRefresh: true,
+//         },
+//       })
+//       .to(
+//         crossFades[i],
+//         {
+//           y: "-150%",
+//           opacity: 0,
+//           zIndex: 1,
+//           duration: 0.7,
+//           ease: "power2.inOut",
+//         },
+//         0
+//       )
+//       .to(
+//         crossFades[i + 1],
+//         { y: "0%", opacity: 1, zIndex: 2, duration: 0.7, ease: "power2.inOut" },
+//         0
+//       );
+//   }
+// })();
