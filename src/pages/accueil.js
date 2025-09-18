@@ -1,5 +1,6 @@
 require("../animations/home-slider.js")();
 require("../animations/home-svg-path.js")();
+require("../animations/carbon-bg-loop.js")();
 
 // Détection optimisée de la qualité de connexion
 const getConnectionQuality = () => {
@@ -123,6 +124,40 @@ let isRevealLoaded = false,
   isLoopLoaded = false,
   revealAnimation = null;
 
+// Fonction pour mettre à jour le pourcentage de chargement
+const updateLoadingPercentage = (percentage) => {
+  const loadElement = document.querySelector("[load-number]");
+  const loadBar = document.querySelector("[load-bar]");
+  if (loadElement) {
+    loadElement.textContent = `${Math.round(percentage)}%`;
+    loadBar.style.width = `${Math.round(percentage)}%`;
+  }
+
+  // Masquer l'écran de chargement quand on atteint vraiment 100%
+  if (percentage >= 100) {
+    const loadScreen = document.querySelector("[load-screen]");
+    const wrapper3D = document.querySelector(".home_hero_3d_wrapper");
+    const navLarge = document.querySelector(".nav-large");
+    const textContent = document.querySelector(".hero_home_content");
+    const bobberLight = document.querySelector(".home_hero_bobber_light");
+    const placeholderImg = document.querySelector("#hero-placeholder-img");
+
+    loadScreen.style.opacity = 0;
+    wrapper3D.style.opacity = 1;
+    setTimeout(() => {
+      placeholderImg.style.display = "none";
+    }, 500);
+    setTimeout(() => {
+      navLarge.style.transform = "translateY(0)";
+    }, 4500);
+    setTimeout(() => {
+      textContent.style.opacity = 1;
+      bobberLight.style.opacity = 1;
+      loadScreen.style.display = "none";
+    }, 5500);
+  }
+};
+
 // Préchargement optimisé par lots non-bloquants
 const preloadBatch = async (urls, batchSize = 10, onProgress) => {
   let loaded = 0;
@@ -189,6 +224,10 @@ const preloadImageBatch = (urls, onProgress) => {
 
 // Initialisation optimisée et simplifiée
 const initImageSequence = async () => {
+  // Variables de suivi du chargement
+  let totalImages = 0;
+  let loadedImages = 0;
+
   // 1. Détection de connexion et génération des URLs
   connectionQuality = await getConnectionQuality();
   const [revealResult, loopResult] = await Promise.all([
@@ -200,6 +239,15 @@ const initImageSequence = async () => {
   loopUrls = loopResult.urls;
   loopDuration = config.loopFrameCount / config.fps;
 
+  // Calcul du total d'images à charger
+  totalImages = Math.min(200, urls.length) + loopUrls.length;
+
+  // Fonction de mise à jour du pourcentage global
+  const updateGlobalProgress = () => {
+    const percentage = (loadedImages / totalImages) * 100;
+    updateLoadingPercentage(percentage);
+  };
+
   // Log résumé
   const quality = revealResult.quality;
   console.log(`🚀 Connexion → Qualité: ${quality} → Dossier: ${quality}`);
@@ -208,17 +256,24 @@ const initImageSequence = async () => {
   const canvas = document.querySelector("#image-sequence");
   if (!canvas) return console.warn("Canvas #image-sequence non trouvé");
 
-  // 3. Préchargement initial et démarrage
-  await preloadBatch(urls.slice(0, 200), 5);
-  await new Promise((resolve) => setTimeout(resolve, 500));
+  // 3. Préchargement initial et démarrage avec suivi du progrès
+  await preloadBatch(urls.slice(0, 200), 5, (loaded, total) => {
+    loadedImages = loaded;
+    updateGlobalProgress();
+  });
 
-  // Masquer le placeholder avant de commencer l'animation
-  const placeholder = document.querySelector("#hero-placeholder-img");
-  if (placeholder) {
-    placeholder.style.display = "none";
-  }
+  // 4. Chargement des images de loop pour atteindre 100%
+  await preloadBatch(loopUrls, 5, (loaded, total) => {
+    loadedImages = Math.min(200, urls.length) + loaded;
+    updateGlobalProgress();
+  });
 
-  // 4. Démarrage de l'animation avec callback optimisé
+  isLoopLoaded = true;
+
+  // Délai de 1 seconde APRÈS avoir atteint 100% avant de lancer la séquence
+  //await new Promise((resolve) => setTimeout(resolve, 100));
+
+  // 5. Démarrage de l'animation avec callback optimisé
   const startLoop = () => {
     if (!isLoopLoaded) return setTimeout(startLoop, 100);
     imageSequence({
@@ -236,14 +291,36 @@ const initImageSequence = async () => {
     onComplete: startLoop,
   });
 
-  // 5. Chargement en arrière-plan
-  Promise.all([
-    urls.length > 200
-      ? preloadImageBatch(urls.slice(200)).then(() => (isRevealLoaded = true))
-      : Promise.resolve((isRevealLoaded = true)),
-    preloadBatch(loopUrls, 5).then(() => (isLoopLoaded = true)),
-  ]);
+  // 6. Chargement en arrière-plan des images restantes (optionnel)
+  if (urls.length > 200) {
+    preloadImageBatch(urls.slice(200), (loaded, total) => {
+      // Les images restantes ne comptent pas pour le pourcentage critique
+    }).then(() => (isRevealLoaded = true));
+  } else {
+    isRevealLoaded = true;
+  }
 };
+
+// Fonction pour ajuster la hauteur du line_path_wrapper
+const setLinePathWrapperHeight = () => {
+  const linePathWrapper = document.querySelector(".line_path_wrapper");
+  const sectionFeature = document.querySelector("[section-feature]");
+
+  if (linePathWrapper && sectionFeature) {
+    const sectionHeight = sectionFeature.offsetHeight;
+    linePathWrapper.style.height = `${sectionHeight}px`;
+  }
+};
+
+// Initialiser la hauteur au chargement
+document.addEventListener("DOMContentLoaded", setLinePathWrapperHeight);
+
+// Mettre à jour la hauteur lors du redimensionnement de la fenêtre
+window.addEventListener("resize", () => {
+  // Debounce pour éviter trop d'appels
+  clearTimeout(window.resizeTimeout);
+  window.resizeTimeout = setTimeout(setLinePathWrapperHeight, 100);
+});
 
 // Initialisation
 setTimeout(initImageSequence, 0);
@@ -269,15 +346,14 @@ gsap.to(
   }
 );
 
+// Animation cross-fade optimisée pour tous les éléments [cross-fade]
 const crossFades = Array.from(document.querySelectorAll("[cross-fade]"));
 
 crossFades.forEach((el) => {
   el.style.position = "absolute";
 });
 
-// Animation cross-fade optimisée pour tous les éléments [cross-fade]
 // (function () {
-//   const crossFades = Array.from(document.querySelectorAll("[cross-fade]"));
 //   if (crossFades.length < 2) return;
 //   // S'assure que le parent est en position relative
 //   const parent = crossFades[0].parentElement;
