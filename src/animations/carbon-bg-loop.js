@@ -1,7 +1,7 @@
 module.exports = function carbonBgLoop() {
   // Configuration
   const frameCount = 135; // 0 to 134
-  const fps = 25;
+  const fps = 200;
   const duration = frameCount / fps;
 
   // Generate URLs for carbon background images
@@ -47,8 +47,9 @@ module.exports = function carbonBgLoop() {
       .timeline({
         scrollTrigger: {
           trigger: canvas,
-          start: "top center",
-          toggleActions: "play none none none",
+          start: "center bottom",
+          end: "center center",
+          scrub: true,
         },
       })
       .add(

@@ -142,29 +142,21 @@ module.exports = function template() {
     }
   }
 
-  function addPulseEffect() {
-    const carouselImages = document.querySelectorAll(".circular_carousel_img");
-    carouselImages.forEach((img) => {
-      img.classList.add("pulse");
-    });
-
-    setTimeout(() => {
-      carouselImages.forEach((img) => {
-        img.classList.remove("pulse");
-      });
-    }, 200);
-  }
+  // Fonction pour déclencher l'animation 3D
+  let play3DSequence = null;
 
   prevBtn.addEventListener("click", () => {
     if (activeIndex === 0) return;
-    addPulseEffect();
+    // Déclencher l'animation 3D si elle existe
+    if (play3DSequence) play3DSequence();
     handleClick(1);
     updateButtonStates();
   });
 
   nextBtn.addEventListener("click", () => {
     if (activeIndex === 5) return;
-    addPulseEffect();
+    // Déclencher l'animation 3D si elle existe
+    if (play3DSequence) play3DSequence();
     handleClick(-1);
     updateButtonStates();
   });
@@ -172,6 +164,8 @@ module.exports = function template() {
   paginationDots.forEach((dot, i) => {
     dot.addEventListener("click", () => {
       if (i === activeIndex) return;
+      // Déclencher l'animation 3D si elle existe
+      if (play3DSequence) play3DSequence();
       const direction = i < activeIndex ? 1 : -1;
       const steps = Math.abs(i - activeIndex);
       rotation += direction * 30 * steps;
@@ -204,12 +198,16 @@ module.exports = function template() {
           if (diff > 0) {
             // Swipe vers la droite: prev
             if (activeIndex > 0) {
+              // Déclencher l'animation 3D si elle existe
+              if (play3DSequence) play3DSequence();
               handleClick(1);
               updateButtonStates();
             }
           } else {
             // Swipe vers la gauche: next
             if (activeIndex < desktopDots.length) {
+              // Déclencher l'animation 3D si elle existe
+              if (play3DSequence) play3DSequence();
               handleClick(-1);
               updateButtonStates();
             }
@@ -239,7 +237,7 @@ module.exports = function template() {
   if (circularSlider3DWrapper) {
     // Configuration de la séquence de boucle
     const loopFrameCount = 49;
-    const loopFPS = 25; // Définir les FPS souhaités
+    const loopFPS = 60; // Définir les FPS souhaités
     const loopDuration = loopFrameCount / loopFPS; // Calculer la durée
     const loopUrls = new Array(loopFrameCount).fill().map((o, i) => {
       return `https://cdn.jsdelivr.net/gh/40-60/mokn@master/dist/img_sequences/baits/loop/loop${i}.webp`;
@@ -284,11 +282,11 @@ module.exports = function template() {
       }
     };
 
-    // Fonction pour démarrer la séquence en boucle
-    const startLoopSequence = () => {
+    // Fonction pour jouer la séquence une seule fois
+    const playSequence = () => {
       if (loopAnimation) loopAnimation.kill();
 
-      // Reset et affichage immédiat de la première image de boucle
+      // Reset et affichage immédiat de la première image
       loopPlayhead.frame = 0;
       updateLoopImage();
 
@@ -296,7 +294,6 @@ module.exports = function template() {
         frame: loopFrameCount - 1,
         duration: loopDuration,
         ease: "none",
-        repeat: -1, // Boucle infinie
         onUpdate: updateLoopImage,
       });
     };
@@ -304,9 +301,12 @@ module.exports = function template() {
     // Précharger les images de la boucle
     preloadLoopImages();
 
-    // Démarrer l'animation de boucle
+    // Afficher la première image au démarrage
     if (window.gsap) {
-      startLoopSequence();
+      loopPlayhead.frame = 0;
+      updateLoopImage();
+      // Exposer la fonction pour pouvoir l'appeler depuis les événements de clic
+      play3DSequence = playSequence;
     } else {
       console.warn("GSAP not found for circular slider 3D loop");
     }

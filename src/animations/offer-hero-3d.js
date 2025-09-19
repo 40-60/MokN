@@ -6,6 +6,28 @@ module.exports = function template() {
     return;
   }
 
+  // const offersHeroContent = document.querySelectorAll(".offer_hero_content");
+
+  // // Only add absolute class if screen width is over 767px
+  // if (window.innerWidth > 767) {
+  //   offersHeroContent.forEach((content) => {
+  //     content.classList.add("absolute");
+  //   });
+  // }
+
+  // // Add a resize listener to handle responsive behavior
+  // window.addEventListener("resize", () => {
+  //   if (window.innerWidth > 767) {
+  //     offersHeroContent.forEach((content) => {
+  //       content.classList.add("absolute");
+  //     });
+  //   } else {
+  //     offersHeroContent.forEach((content) => {
+  //       content.classList.remove("absolute");
+  //     });
+  //   }
+  // });
+
   // Configuration de la séquence d'images
   const frameCount = 96; // de 0 à 108
   const urls = new Array(frameCount).fill().map((o, i) => {
@@ -130,8 +152,6 @@ module.exports = function template() {
       onUpdate: updateLoopImage,
       paused: true, // Démarrer en pause
     });
-
-    console.log("offer_hero_left", document.querySelector("#offer_hero_left"));
 
     // Créer l'animation ScrollTrigger
     gsap.to(playhead, {
