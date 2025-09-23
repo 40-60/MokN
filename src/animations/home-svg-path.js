@@ -2,6 +2,16 @@ module.exports = function homeSvgPathAnimation() {
   // Animation path
   const path = document.querySelector("#scroll-path");
   const pathLight = document.querySelector(".path_light");
+  const sectionFeatures = document.querySelector("#section-features");
+  const pathWrapper = document.querySelector(".line_path_wrapper");
+
+  const setWrapperHeight = () => {
+    pathWrapper.style.height =
+      Math.round(sectionFeatures.offsetHeight / 16) + 5 + "rem";
+  };
+
+  setWrapperHeight();
+  window.addEventListener("resize", setWrapperHeight);
 
   if (path && pathLight) {
     const length = path.getTotalLength();
@@ -21,7 +31,7 @@ module.exports = function homeSvgPathAnimation() {
       strokeDashoffset: 0,
       ease: "none",
       scrollTrigger: {
-        trigger: "#section-features",
+        trigger: sectionFeatures,
         start: "top bottom",
         end: "bottom bottom",
         scrub: true,
@@ -41,7 +51,7 @@ module.exports = function homeSvgPathAnimation() {
       },
       ease: "none",
       scrollTrigger: {
-        trigger: "#section-features",
+        trigger: sectionFeatures,
         start: "top bottom",
         end: "bottom bottom",
         scrub: true,
