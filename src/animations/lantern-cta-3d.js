@@ -1,13 +1,21 @@
 module.exports = function lanternCta3d() {
   // Video sources configuration for lantern
   const LANTERN_VIDEO_SOURCES = {
+    // loop: {
+    //   mp4: "http://localhost:3000/img_sequences/lantern/lantern-loop.mp4",
+    //   mov: "http://localhost:3000/img_sequences/lantern/lantern-loop.mov",
+    // },
     loop: {
-      mp4: "http://localhost:3000/img_sequences/lantern/lantern-loop.mp4",
-      mov: "http://localhost:3000/img_sequences/lantern/lantern-loop.mov",
+      mp4: "https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/lantern/lantern-loop.mp4",
+      mov: "https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/lantern/lantern-loop.mov",
     },
+    // intro: {
+    //   mp4: "http://localhost:3000/img_sequences/lantern/lantern-intro.mp4",
+    //   mov: "http://localhost:3000/img_sequences/lantern/lantern-intro.mov",
+    // },
     intro: {
-      mp4: "http://localhost:3000/img_sequences/lantern/lantern-intro.mp4",
-      mov: "http://localhost:3000/img_sequences/lantern/lantern-intro.mov",
+      mp4: "https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/lantern/lantern-intro.mp4",
+      mov: "https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/lantern/lantern-intro.mov",
     },
   };
 

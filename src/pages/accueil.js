@@ -90,6 +90,8 @@ function triggerUIAnimations() {
  */
 function isFirstVisit() {
   const hasVisited = sessionStorage.getItem("mokn_has_visited");
+  console.log("First visit : ", !hasVisited);
+
   if (!hasVisited) {
     sessionStorage.setItem("mokn_has_visited", "true");
     return true;
