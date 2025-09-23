@@ -4,10 +4,16 @@ require("../animations/home-svg-path.js")();
 require("../animations/carbon-bg-loop.js")();
 require("../animations/lantern-cta-3d.js")();
 
-// Constants for timing
+// Constants for timing - different delays for first visit vs return visits
 const ANIMATION_TIMINGS = {
-  NAV_DELAY: 3700,
-  CONTENT_DELAY: 4700,
+  FIRST_VISIT: {
+    NAV_DELAY: 3700,
+    CONTENT_DELAY: 4700,
+  },
+  RETURN_VISIT: {
+    NAV_DELAY: 100,
+    CONTENT_DELAY: 500,
+  },
 };
 
 // Video sources configuration
@@ -64,9 +70,19 @@ function createVideoElement(config) {
 
 /**
  * Handles UI animations triggered by intro video
+ * @param {boolean} isFirstVisit - Whether this is the user's first visit
  */
-function triggerUIAnimations() {
+function triggerUIAnimations(isFirstVisit = true) {
   console.log("Intro video started - triggering UI animations");
+
+  // Select appropriate timing based on visit type
+  const timings = isFirstVisit
+    ? ANIMATION_TIMINGS.FIRST_VISIT
+    : ANIMATION_TIMINGS.RETURN_VISIT;
+  console.log(
+    `Using ${isFirstVisit ? "first visit" : "return visit"} timings:`,
+    timings
+  );
 
   // Immediate opacity change
   if (hero3dWrapper) hero3dWrapper.style.opacity = 1;
@@ -74,14 +90,14 @@ function triggerUIAnimations() {
   // Navigation animation
   setTimeout(() => {
     if (navLarge) navLarge.style.transform = "translateY(0)";
-  }, ANIMATION_TIMINGS.NAV_DELAY);
+  }, timings.NAV_DELAY);
 
   // Content reveal animation
   setTimeout(() => {
     if (textContent) textContent.style.opacity = 1;
     // if (bobberLight) bobberLight.style.opacity = 1;
     loadScreen.style.display = "none";
-  }, ANIMATION_TIMINGS.CONTENT_DELAY);
+  }, timings.CONTENT_DELAY);
 }
 
 /**
@@ -131,7 +147,7 @@ function initializeVideos(config) {
 
     // Event handlers for first visit
     if (onIntroPlay) {
-      introVideo.addEventListener("play", onIntroPlay);
+      introVideo.addEventListener("play", () => onIntroPlay(true));
     }
 
     introVideo.addEventListener("ended", () => {
@@ -158,8 +174,8 @@ function initializeVideos(config) {
 
     // Trigger UI animations immediately since we're skipping intro
     if (onIntroPlay) {
-      // Delay slightly to ensure video starts playing
-      setTimeout(onIntroPlay, 100);
+      // Delay slightly to ensure video starts playing, pass false for return visit
+      setTimeout(() => onIntroPlay(false), 100);
     }
 
     // Append only loop video to wrapper
@@ -191,7 +207,7 @@ initializeHeroVideos();
 /**
  * Optimizes cross-fade elements positioning
  */
-const crossFadeElements = document.querySelectorAll("[cross-fade]");
-crossFadeElements.forEach((el) => {
-  el.style.position = "absolute";
-});
+// const crossFadeElements = document.querySelectorAll("[cross-fade]");
+// crossFadeElements.forEach((el) => {
+//   el.style.position = "absolute";
+// });

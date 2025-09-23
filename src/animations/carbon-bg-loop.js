@@ -7,8 +7,16 @@ module.exports = function carbonBgLoop() {
   // Generate URLs for carbon background images
   const urls = Array.from(
     { length: frameCount },
-    (_, i) => `http://localhost:3000/img_sequences/carbon-bg/carbon-bg${i}.webp`
+    (_, i) =>
+      `https://cdn.jsdelivr.net/gh/40-60/mokn@master/dist/img_sequences/carbon-bg/carbon-bg${i}.webp`
   );
+
+  const placeholderImg = document.querySelectorAll("[placeholder-carbon]");
+  console.log("Placeholder images found:", placeholderImg.length);
+
+  placeholderImg.forEach((img) => {
+    img.style.display = "none";
+  });
 
   // Simple image sequence function
   const imageSequence = (config) => {
