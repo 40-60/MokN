@@ -1,12 +1,12 @@
-module.exports = function template() {
+module.exports = function offerHero3D() {
   const sequenceWrapper = document.querySelector("[baits-3d-wrapper]");
 
-  if (!sequenceWrapper || !window.gsap || !window.ScrollTrigger) {
-    console.warn("Élément .offer_hero_3d, GSAP ou ScrollTrigger non trouvé");
-    return;
-  }
+  // if (!sequenceWrapper || !window.gsap || !window.ScrollTrigger) {
+  //   console.warn("Élément .offer_hero_3d, GSAP ou ScrollTrigger non trouvé");
+  //   return;
+  // }
 
-  // const offersHeroContent = document.querySelectorAll(".offer_hero_content");
+  const offersHeroContent = document.querySelectorAll(".offer_hero_content");
 
   // // Only add absolute class if screen width is over 767px
   // if (window.innerWidth > 767) {
@@ -31,7 +31,7 @@ module.exports = function template() {
   // Configuration de la séquence d'images
   const frameCount = 96; // de 0 à 108
   const urls = new Array(frameCount).fill().map((o, i) => {
-    return `https://cdn.jsdelivr.net/gh/40-60/mokn@master/dist/img_sequences/baits/reveal/reveal${i}.webp`;
+    return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/baits/reveal/reveal${i}.webp`;
   });
 
   // Fonction pour créer la séquence d'images
@@ -88,7 +88,7 @@ module.exports = function template() {
     const loopFPS = 25; // Définir les FPS souhaités
     const loopDuration = loopFrameCount / loopFPS; // Calculer la durée
     const loopUrls = new Array(loopFrameCount).fill().map((o, i) => {
-      return `https://cdn.jsdelivr.net/gh/40-60/mokn@master/dist/img_sequences/baits/loop/loop${i}.webp`;
+      return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/baits/loop/loop${i}.webp`;
     });
 
     let loopImages = [];
