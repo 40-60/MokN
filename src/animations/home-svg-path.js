@@ -5,9 +5,16 @@ module.exports = function homeSvgPathAnimation() {
   const sectionFeatures = document.querySelector("#section-features");
   const pathWrapper = document.querySelector(".line_path_wrapper");
 
+  let motionPathTween; // Store reference to the motion path tween
+
   const setWrapperHeight = () => {
     pathWrapper.style.height =
       Math.round(sectionFeatures.offsetHeight / 16) + 5 + "rem";
+
+    // Refresh motion path after height change
+    if (motionPathTween && path) {
+      motionPathTween.invalidate().restart();
+    }
   };
 
   setWrapperHeight();
@@ -43,7 +50,7 @@ module.exports = function homeSvgPathAnimation() {
     });
 
     // Animate the path_light element along the path using MotionPath
-    gsap.to(pathLight, {
+    motionPathTween = gsap.to(pathLight, {
       motionPath: {
         path: path,
         align: path,
