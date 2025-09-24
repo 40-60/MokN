@@ -1,12 +1,38 @@
 module.exports = function offerHero3D() {
   const sequenceWrapper = document.querySelector("[baits-3d-wrapper]");
 
+  // if (!sequenceWrapper || !window.gsap || !window.ScrollTrigger) {
+  //   console.warn("Élément .offer_hero_3d, GSAP ou ScrollTrigger non trouvé");
+  //   return;
+  // }
+
   const offersHeroContent = document.querySelectorAll(".offer_hero_content");
 
+  // // Only add absolute class if screen width is over 767px
+  // if (window.innerWidth > 767) {
+  //   offersHeroContent.forEach((content) => {
+  //     content.classList.add("absolute");
+  //   });
+  // }
+
+  // // Add a resize listener to handle responsive behavior
+  // window.addEventListener("resize", () => {
+  //   if (window.innerWidth > 767) {
+  //     offersHeroContent.forEach((content) => {
+  //       content.classList.add("absolute");
+  //     });
+  //   } else {
+  //     offersHeroContent.forEach((content) => {
+  //       content.classList.remove("absolute");
+  //     });
+  //   }
+  // });
+
   // Configuration de la séquence d'images
-  const frameCount = 96; // de 0 à 108
+  const frameCount = 61; // de 0 à 60
   const urls = new Array(frameCount).fill().map((o, i) => {
-    return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/baits/reveal/reveal${i}.webp`;
+    // return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/lantern/increase/increase${i}.webp`;
+    return `http://localhost:3000/img_sequences/lantern/increase/increase${i}.webp`;
   });
 
   // Fonction pour créer la séquence d'images
@@ -59,11 +85,12 @@ module.exports = function offerHero3D() {
     });
 
     // Configuration de la séquence de boucle
-    const loopFrameCount = 49;
+    const loopFrameCount = 61;
     const loopFPS = 25; // Définir les FPS souhaités
     const loopDuration = loopFrameCount / loopFPS; // Calculer la durée
     const loopUrls = new Array(loopFrameCount).fill().map((o, i) => {
-      return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/baits/loop/loop${i}.webp`;
+      // return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/lantern/strong/strong${i}.webp`;
+      return `http://localhost:3000/img_sequences/lantern/strong/strong${i}.webp`;
     });
 
     let loopImages = [];

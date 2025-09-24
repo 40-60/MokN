@@ -1,5 +1,5 @@
-require("../animations/baits-hero-3d.js")();
-require("../animations/circular-slider.js")();
+require("../animations/lantern-hero-3d.js")();
+require("../animations/baits-circular-slider.js")();
 
 const scrollCTA = document.querySelector("#hero-scroll-cta");
 
