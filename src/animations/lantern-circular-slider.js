@@ -147,16 +147,16 @@ module.exports = function template() {
 
   prevBtn.addEventListener("click", () => {
     if (activeIndex === 0) return;
-    // Déclencher l'animation 3D si elle existe
-    if (play3DSequence) play3DSequence();
+    // Déclencher l'animation 3D si elle existe (direction: prev)
+    if (play3DSequence) play3DSequence("prev");
     handleClick(1);
     updateButtonStates();
   });
 
   nextBtn.addEventListener("click", () => {
     if (activeIndex === 5) return;
-    // Déclencher l'animation 3D si elle existe
-    if (play3DSequence) play3DSequence();
+    // Déclencher l'animation 3D si elle existe (direction: next)
+    if (play3DSequence) play3DSequence("next");
     handleClick(-1);
     updateButtonStates();
   });
@@ -164,11 +164,13 @@ module.exports = function template() {
   paginationDots.forEach((dot, i) => {
     dot.addEventListener("click", () => {
       if (i === activeIndex) return;
+      // Déterminer la direction selon le clic sur les dots
+      const direction = i < activeIndex ? "prev" : "next";
       // Déclencher l'animation 3D si elle existe
-      if (play3DSequence) play3DSequence();
-      const direction = i < activeIndex ? 1 : -1;
+      if (play3DSequence) play3DSequence(direction);
+      const rotationDirection = i < activeIndex ? 1 : -1;
       const steps = Math.abs(i - activeIndex);
-      rotation += direction * 30 * steps;
+      rotation += rotationDirection * 30 * steps;
       activeIndex = i;
       updateTransform();
       updateButtonStates();
@@ -199,7 +201,7 @@ module.exports = function template() {
             // Swipe vers la droite: prev
             if (activeIndex > 0) {
               // Déclencher l'animation 3D si elle existe
-              if (play3DSequence) play3DSequence();
+              if (play3DSequence) play3DSequence("prev");
               handleClick(1);
               updateButtonStates();
             }
@@ -207,7 +209,7 @@ module.exports = function template() {
             // Swipe vers la gauche: next
             if (activeIndex < desktopDots.length) {
               // Déclencher l'animation 3D si elle existe
-              if (play3DSequence) play3DSequence();
+              if (play3DSequence) play3DSequence("next");
               handleClick(-1);
               updateButtonStates();
             }
@@ -235,13 +237,28 @@ module.exports = function template() {
   );
 
   if (circularSlider3DWrapper) {
-    // Configuration de la séquence de boucle
-    const loopFrameCount = 49;
-    const loopFPS = 60; // Définir les FPS souhaités
-    const loopDuration = loopFrameCount / loopFPS; // Calculer la durée
-    const loopUrls = new Array(loopFrameCount).fill().map((o, i) => {
-      return `https://cdn.jsdelivr.net/gh/40-60/mokn@master/dist/img_sequences/baits/loop/loop${i}.webp`;
-    });
+    // Configuration des séquences
+    const FRAME_COUNT = 61;
+    const FPS = 60;
+    const DURATION = FRAME_COUNT / FPS;
+    const BASE_URL =
+      "https://cdn.jsdelivr.net/gh/40-60/mokn@master/dist/img_sequences/lantern";
+
+    // Fonction utilitaire pour générer les URLs d'une séquence
+    const generateSequenceUrls = (sequenceName) => {
+      return new Array(FRAME_COUNT)
+        .fill()
+        .map((_, i) => `${BASE_URL}/${sequenceName}/${sequenceName}${i}.webp`);
+    };
+
+    // Générer toutes les URLs
+    const dimUrls = generateSequenceUrls("dim");
+    const increaseUrls = generateSequenceUrls("increase");
+    const strongUrls = generateSequenceUrls("strong");
+
+    // Configurations simplifiées (toutes identiques maintenant)
+    const dimFrameCount = (increaseFrameCount = strongFrameCount = FRAME_COUNT);
+    const dimDuration = (increaseDuration = strongDuration = DURATION);
 
     // Créer le canvas pour la boucle
     let loopCanvas = document.createElement("canvas");
@@ -254,26 +271,35 @@ module.exports = function template() {
     // Styliser le canvas avec la classe .img-contain
     loopCanvas.classList.add("img-contain");
 
-    let loopImages = [];
+    let dimImages = [];
+    let increaseImages = [];
+    let strongImages = [];
     let loopAnimation = null;
     let loopPlayhead = { frame: 0 };
 
-    // Précharger les images de la boucle
+    // Fonction utilitaire pour créer des images à partir d'URLs
+    const createImagesFromUrls = (urls) => {
+      return urls.map((url) => {
+        const img = new Image();
+        img.src = url;
+        return img;
+      });
+    };
+
+    // Précharger les images des trois séquences
     const preloadLoopImages = () => {
       return new Promise((resolve) => {
-        loopImages = loopUrls.map((url) => {
-          let img = new Image();
-          img.src = url;
-          return img;
-        });
+        // Créer toutes les images en une fois
+        dimImages = createImagesFromUrls(dimUrls);
+        increaseImages = createImagesFromUrls(increaseUrls);
+        strongImages = createImagesFromUrls(strongUrls);
 
-        // Attendre que la première image soit chargée pour initialiser le canvas
-        if (loopImages[0]) {
-          loopImages[0].onload = () => {
-            // Initialiser les dimensions du canvas avec la première image
-            loopCanvas.width = loopImages[0].width;
-            loopCanvas.height = loopImages[0].height;
-            updateLoopImage();
+        // Initialiser le canvas avec la première image
+        if (dimImages[0]) {
+          dimImages[0].onload = () => {
+            loopCanvas.width = dimImages[0].width;
+            loopCanvas.height = dimImages[0].height;
+            updateLoopImage(dimImages);
             resolve();
           };
         } else {
@@ -282,35 +308,92 @@ module.exports = function template() {
       });
     };
 
-    const updateLoopImage = () => {
+    const updateLoopImage = (images) => {
       const currentFrame = Math.round(loopPlayhead.frame);
-      if (loopImages[currentFrame] && loopImages[currentFrame].complete) {
+      if (images[currentFrame] && images[currentFrame].complete) {
         if (
-          loopCanvas.width !== loopImages[currentFrame].width ||
-          loopCanvas.height !== loopImages[currentFrame].height
+          loopCanvas.width !== images[currentFrame].width ||
+          loopCanvas.height !== images[currentFrame].height
         ) {
-          loopCanvas.width = loopImages[currentFrame].width;
-          loopCanvas.height = loopImages[currentFrame].height;
+          loopCanvas.width = images[currentFrame].width;
+          loopCanvas.height = images[currentFrame].height;
         }
         loopCtx.clearRect(0, 0, loopCanvas.width, loopCanvas.height);
-        loopCtx.drawImage(loopImages[currentFrame], 0, 0);
+        loopCtx.drawImage(images[currentFrame], 0, 0);
+      }
+    };
+
+    // Fonction utilitaire pour obtenir les données d'animation
+    const getAnimationData = (type) => {
+      const animations = {
+        dim: {
+          images: dimImages,
+          frameCount: dimFrameCount,
+          duration: dimDuration,
+        },
+        increase: {
+          images: increaseImages,
+          frameCount: increaseFrameCount,
+          duration: increaseDuration,
+        },
+        strong: {
+          images: strongImages,
+          frameCount: strongFrameCount,
+          duration: strongDuration,
+        },
+      };
+      return animations[type];
+    };
+
+    // Fonction pour déterminer le type d'animation selon l'index et la direction
+    const getAnimationType = (index, direction) => {
+      if (direction === "next") {
+        if (index < 2) return "dim";
+        if (index === 2) return "increase";
+        return "strong";
+      } else {
+        // direction === "prev"
+        if (index === 3) return "increase";
+        if (index >= 4) return "strong";
+        return "dim";
       }
     };
 
     // Fonction pour jouer la séquence une seule fois
-    const playSequence = () => {
+    const playSequence = (direction = "next") => {
+      console.log("Active Index:", activeIndex, "Direction:", direction);
+
       if (loopAnimation) loopAnimation.kill();
 
-      // Reset et affichage immédiat de la première image
-      loopPlayhead.frame = 0;
-      updateLoopImage();
+      // Obtenir le type d'animation et ses données
+      const animationType = getAnimationType(activeIndex, direction);
+      const { images, frameCount, duration } = getAnimationData(animationType);
 
-      loopAnimation = gsap.to(loopPlayhead, {
-        frame: loopFrameCount - 1,
-        duration: loopDuration,
-        ease: "none",
-        onUpdate: updateLoopImage,
-      });
+      // Déterminer si on doit jouer en reverse (index 3 + direction PREV)
+      const shouldPlayReverse = direction === "prev" && activeIndex === 3;
+
+      // Reset et affichage de la première/dernière image selon la direction
+      if (shouldPlayReverse) {
+        loopPlayhead.frame = frameCount - 1;
+        updateLoopImage(images);
+
+        loopAnimation = gsap.to(loopPlayhead, {
+          frame: 0,
+          duration: duration,
+          ease: "none",
+          onUpdate: () => updateLoopImage(images),
+        });
+      } else {
+        loopPlayhead.frame = 0;
+        updateLoopImage(images);
+
+        loopAnimation = gsap.to(loopPlayhead, {
+          frame: frameCount - 1,
+          duration: duration,
+          ease: "none",
+          onUpdate: () => updateLoopImage(images),
+        });
+      }
     };
 
     // Précharger les images de la boucle et initialiser

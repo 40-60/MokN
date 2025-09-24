@@ -161,7 +161,7 @@ module.exports = function offerHero3D() {
       ease: "none",
       onUpdate: updateScrollImage,
       scrollTrigger: {
-        trigger: "#offer_hero_left",
+        trigger: "..offer_hero_grid",
         start: "top top",
         end: "bottom 20%",
         scrub: true,

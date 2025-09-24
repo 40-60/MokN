@@ -1,32 +1,7 @@
 module.exports = function offerHero3D() {
   const sequenceWrapper = document.querySelector("[baits-3d-wrapper]");
 
-  // if (!sequenceWrapper || !window.gsap || !window.ScrollTrigger) {
-  //   console.warn("Élément .offer_hero_3d, GSAP ou ScrollTrigger non trouvé");
-  //   return;
-  // }
-
   const offersHeroContent = document.querySelectorAll(".offer_hero_content");
-
-  // // Only add absolute class if screen width is over 767px
-  // if (window.innerWidth > 767) {
-  //   offersHeroContent.forEach((content) => {
-  //     content.classList.add("absolute");
-  //   });
-  // }
-
-  // // Add a resize listener to handle responsive behavior
-  // window.addEventListener("resize", () => {
-  //   if (window.innerWidth > 767) {
-  //     offersHeroContent.forEach((content) => {
-  //       content.classList.add("absolute");
-  //     });
-  //   } else {
-  //     offersHeroContent.forEach((content) => {
-  //       content.classList.remove("absolute");
-  //     });
-  //   }
-  // });
 
   // Configuration de la séquence d'images
   const frameCount = 96; // de 0 à 108
@@ -159,9 +134,10 @@ module.exports = function offerHero3D() {
       ease: "none",
       onUpdate: updateScrollImage,
       scrollTrigger: {
-        trigger: "#offer_hero_left",
+        trigger: ".offer_hero_grid",
         start: "top top",
-        end: "bottom 20%",
+        end: "bottom 40%",
+        markers: true,
         scrub: true,
         invalidateOnRefresh: true,
         // markers: true,
