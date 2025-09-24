@@ -260,10 +260,25 @@ module.exports = function template() {
 
     // Précharger les images de la boucle
     const preloadLoopImages = () => {
-      loopImages = loopUrls.map((url) => {
-        let img = new Image();
-        img.src = url;
-        return img;
+      return new Promise((resolve) => {
+        loopImages = loopUrls.map((url) => {
+          let img = new Image();
+          img.src = url;
+          return img;
+        });
+
+        // Attendre que la première image soit chargée pour initialiser le canvas
+        if (loopImages[0]) {
+          loopImages[0].onload = () => {
+            // Initialiser les dimensions du canvas avec la première image
+            loopCanvas.width = loopImages[0].width;
+            loopCanvas.height = loopImages[0].height;
+            updateLoopImage();
+            resolve();
+          };
+        } else {
+          resolve();
+        }
       });
     };
 
@@ -298,15 +313,12 @@ module.exports = function template() {
       });
     };
 
-    // Précharger les images de la boucle
-    preloadLoopImages();
-
-    // Afficher la première image au démarrage
+    // Précharger les images de la boucle et initialiser
     if (window.gsap) {
-      loopPlayhead.frame = 0;
-      updateLoopImage();
-      // Exposer la fonction pour pouvoir l'appeler depuis les événements de clic
-      play3DSequence = playSequence;
+      preloadLoopImages().then(() => {
+        // Exposer la fonction pour pouvoir l'appeler depuis les événements de clic
+        play3DSequence = playSequence;
+      });
     } else {
       console.warn("GSAP not found for circular slider 3D loop");
     }
