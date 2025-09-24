@@ -211,3 +211,25 @@ initializeHeroVideos();
 // crossFadeElements.forEach((el) => {
 //   el.style.position = "absolute";
 // });
+
+const navSmall = document.querySelector(".nav-small");
+
+// ScrollTrigger animation only for screens above 991px
+if (window.innerWidth > 991) {
+  // Set initial opacity to 0
+  gsap.set(navSmall, { opacity: 0 });
+
+  gsap.to(navSmall, {
+    opacity: 1,
+    duration: 0.5,
+    ease: "power1.out",
+    scrollTrigger: {
+      trigger: "[section-feature]",
+      start: "top bottom",
+      toggleActions: "play none none reverse",
+    },
+  });
+} else {
+  // For mobile/tablet, ensure nav is always visible
+  gsap.set(navSmall, { opacity: 1 });
+}

@@ -1,4 +1,4 @@
-require("./animations/text-glow-flicker.js")();
+// require("./animations/text-glow-flicker.js")();
 // Smooth scrolling with Lenis
 // const lenis = new Lenis({
 //   // Valeur entre 0 et 1

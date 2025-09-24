@@ -12,7 +12,6 @@ module.exports = function carbonBgLoop() {
   );
 
   const placeholderImg = document.querySelectorAll("[placeholder-carbon]");
-  console.log("Placeholder images found:", placeholderImg.length);
 
   placeholderImg.forEach((img) => {
     img.style.display = "none";

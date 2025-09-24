@@ -1,8 +1,23 @@
 const valuesP = document.querySelectorAll(".values_p");
 
-valuesP.forEach((p) => {
-  p.style.position = "absolute";
-});
+// Function to apply/remove absolute positioning based on screen width
+function handleValuesPositioning() {
+  if (window.innerWidth > 767) {
+    valuesP.forEach((p) => {
+      p.style.position = "absolute";
+    });
+  } else {
+    valuesP.forEach((p) => {
+      p.style.position = "";
+    });
+  }
+}
+
+// Apply positioning on initial load
+handleValuesPositioning();
+
+// Handle window resize
+window.addEventListener("resize", handleValuesPositioning);
 
 // Text highlight animation setup function
 function setupTextHighlightAnimation() {
