@@ -88,9 +88,11 @@ function triggerUIAnimations(isFirstVisit = true) {
   if (hero3dWrapper) hero3dWrapper.style.opacity = 1;
 
   // Navigation animation
-  setTimeout(() => {
-    if (navLarge) navLarge.style.transform = "translateY(0)";
-  }, timings.NAV_DELAY);
+  if (window.innerWidth > 991) {
+    setTimeout(() => {
+      if (navLarge) navLarge.style.transform = "translateY(0)";
+    }, timings.NAV_DELAY);
+  }
 
   // Content reveal animation
   setTimeout(() => {
