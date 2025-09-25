@@ -31,8 +31,8 @@ module.exports = function offerHero3D() {
   // Configuration de la séquence d'images
   const frameCount = 61; // de 0 à 60
   const urls = new Array(frameCount).fill().map((o, i) => {
-    // return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/lantern/increase/increase${i}.webp`;
-    return `http://localhost:3000/img_sequences/lantern/increase/increase${i}.webp`;
+    return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/lantern/increase/increase${i}.webp`;
+    // return `http://localhost:3000/img_sequences/lantern/increase/increase${i}.webp`;
   });
 
   // Fonction pour créer la séquence d'images
@@ -89,8 +89,8 @@ module.exports = function offerHero3D() {
     const loopFPS = 25; // Définir les FPS souhaités
     const loopDuration = loopFrameCount / loopFPS; // Calculer la durée
     const loopUrls = new Array(loopFrameCount).fill().map((o, i) => {
-      // return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/lantern/strong/strong${i}.webp`;
-      return `http://localhost:3000/img_sequences/lantern/strong/strong${i}.webp`;
+      return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/lantern/strong/strong${i}.webp`;
+      // return `http://localhost:3000/img_sequences/lantern/strong/strong${i}.webp`;
     });
 
     let loopImages = [];
@@ -161,7 +161,7 @@ module.exports = function offerHero3D() {
       ease: "none",
       onUpdate: updateScrollImage,
       scrollTrigger: {
-        trigger: "..offer_hero_grid",
+        trigger: ".offer_hero_grid",
         start: "top top",
         end: "bottom 20%",
         scrub: true,
