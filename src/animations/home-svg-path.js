@@ -34,7 +34,7 @@ module.exports = function homeSvgPathAnimation() {
     gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
     // Animate the stroke dash offset
-    gsap.to(path, {
+    motionPathTween = gsap.to(path, {
       strokeDashoffset: 0,
       ease: "none",
       scrollTrigger: {
@@ -42,10 +42,6 @@ module.exports = function homeSvgPathAnimation() {
         start: "top bottom",
         end: "bottom bottom",
         scrub: true,
-        // onUpdate: (self) => {
-        //   const percent = Math.round(self.progress * 100);
-        //   console.log(`Scroll progression: ${percent}%`);
-        // },
       },
     });
 
