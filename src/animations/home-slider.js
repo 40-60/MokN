@@ -2,12 +2,12 @@ const lottieWeb = require("lottie-web");
 
 module.exports = function slider() {
   const lottieJsonUrls = [
-    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68c7d0ea5d9c82b60265d1de_slider_lottie_1.json",
-    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68c7d0ea1dea2371364d1691_slider_lottie_2.json",
-    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68c7d0eb5e67b7822166786d_slider_lottie_3.json",
-    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68c7d0ead0fc7ffcd12ebe96_slider_lottie_4.json",
-    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68c7d0eb08a0af94ec94894c_slider_lottie_5.json",
-    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68c7d0eb5521e89cbf81ed27_slider_lottie_6.json",
+    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68c7d0ea5d9c82b60265d1de_372388cd1820a7f9c78363fae14d9723_slider_lottie_1.json",
+    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68d50d60ce9ad94d64729620_Sequence%202%20No%20Background.json",
+    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68d50d607c17dbe15ce62fee_Sequence%203%20No%20Background.json",
+    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68d50d602c0beae04485c303_Sequence%204%20No%20Background.json",
+    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68d50d60e1020e881aa559d1_Sequence%205%20No%20Background.json",
+    "https://cdn.prod.website-files.com/68946a7f9dd4e558382abd0f/68d50d60e6999dbba0150f57_Sequence%206%20No%20Background.json"
   ];
 
   const lottieWrapper = document.querySelector(".slider_lottie_wrapper");
