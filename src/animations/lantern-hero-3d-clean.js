@@ -4,8 +4,8 @@ module.exports = function offerHero3D() {
   // Configuration de la séquence dim uniquement
   const frameCount = 61;
   const dimUrls = new Array(frameCount).fill().map((o, i) => {
-    // return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/lantern/dim/dim${i}.webp`;
-    return `http://localhost:3000/img_sequences/lantern/dim/dim${i}.webp`;
+    return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/lantern/dim/dim${i}.webp`;
+    // return `http://localhost:3000/img_sequences/lantern/dim/dim${i}.webp`;
   });
 
   // Fonction pour créer la séquence d'images
@@ -85,7 +85,7 @@ module.exports = function offerHero3D() {
         console.error(`❌ Failed to load dim image ${i}: ${url}`);
       };
       img.src = url;
-      return img;
+      //   return img;
     });
 
     // Forcer le démarrage après 2 secondes si pas encore démarré
