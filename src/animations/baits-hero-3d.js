@@ -137,7 +137,6 @@ module.exports = function offerHero3D() {
         trigger: ".offer_hero_grid",
         start: "top top",
         end: "bottom 40%",
-        markers: true,
         scrub: true,
         invalidateOnRefresh: true,
         // markers: true,

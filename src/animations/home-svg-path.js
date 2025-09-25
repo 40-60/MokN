@@ -5,16 +5,9 @@ module.exports = function homeSvgPathAnimation() {
   const sectionFeatures = document.querySelector("#section-features");
   const pathWrapper = document.querySelector(".line_path_wrapper");
 
-  let motionPathTween; // Store reference to the motion path tween
-
   const setWrapperHeight = () => {
     pathWrapper.style.height =
       Math.round(sectionFeatures.offsetHeight / 16) + 5 + "rem";
-
-    // Refresh motion path after height change
-    if (motionPathTween && path) {
-      motionPathTween.invalidate().restart();
-    }
   };
 
   setWrapperHeight();
@@ -34,7 +27,7 @@ module.exports = function homeSvgPathAnimation() {
     gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
     // Animate the stroke dash offset
-    motionPathTween = gsap.to(path, {
+    gsap.to(path, {
       strokeDashoffset: 0,
       ease: "none",
       scrollTrigger: {
@@ -42,11 +35,15 @@ module.exports = function homeSvgPathAnimation() {
         start: "top bottom",
         end: "bottom bottom",
         scrub: true,
+        // onUpdate: (self) => {
+        //   const percent = Math.round(self.progress * 100);
+        //   console.log(`Scroll progression: ${percent}%`);
+        // },
       },
     });
 
     // Animate the path_light element along the path using MotionPath
-    motionPathTween = gsap.to(pathLight, {
+    gsap.to(pathLight, {
       motionPath: {
         path: path,
         align: path,
