@@ -1,4 +1,9 @@
 module.exports = function carbonBgLoop() {
+  // Only run on screens wider than 767px
+  if (window.innerWidth <= 767) {
+    return;
+  }
+
   // Configuration
   const frameCount = 135; // 0 to 134
   const fps = 200;

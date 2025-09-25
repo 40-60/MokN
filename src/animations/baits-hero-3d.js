@@ -136,7 +136,7 @@ module.exports = function offerHero3D() {
       scrollTrigger: {
         trigger: ".offer_hero_grid",
         start: "top top",
-        end: "bottom 40%",
+        end: "bottom 20%",
         scrub: true,
         invalidateOnRefresh: true,
         // markers: true,

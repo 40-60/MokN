@@ -22,6 +22,11 @@ module.exports = function template() {
     ".circular_carousel_dot.is-mobile .circular_carousel_dot_light"
   );
 
+  // Query the .lantern_cc_header elements
+  const lanternHeaders = document.querySelectorAll(".lantern_cc_header");
+
+  lanternHeaders[1].classList.add("incoming");
+
   let rotation = 0;
   let activeIndex = 0;
 
@@ -47,6 +52,24 @@ module.exports = function template() {
       h3.classList.remove("text-color-white");
       p.classList.add("text-color-gs-600");
       p.classList.remove("text-color-gs-300");
+    }
+  }
+
+  function handleLanternHeaders(newIndex, direction) {
+    if (lanternHeaders.length < 2) return;
+
+    const firstHeader = lanternHeaders[0];
+    const secondHeader = lanternHeaders[1];
+
+    // When moving from index 2 to 3 (next click at index 2)
+    if (activeIndex === 2 && newIndex === 3 && direction === "next") {
+      firstHeader.classList.add("done");
+      secondHeader.classList.remove("incoming");
+    }
+    // When moving from index 3 to 2 (prev click at index 3)
+    else if (activeIndex === 3 && newIndex === 2 && direction === "prev") {
+      firstHeader.classList.remove("done");
+      secondHeader.classList.add("incoming");
     }
   }
 
@@ -123,7 +146,9 @@ module.exports = function template() {
     }
   }
 
-  function handleClick(direction) {
+  function handleClick(direction, clickDirection) {
+    const newIndex = activeIndex - direction;
+    handleLanternHeaders(newIndex, clickDirection);
     rotation += direction * 30;
     activeIndex -= direction;
     updateTransform();
@@ -149,7 +174,7 @@ module.exports = function template() {
     if (activeIndex === 0) return;
     // Déclencher l'animation 3D si elle existe (direction: prev)
     if (play3DSequence) play3DSequence("prev");
-    handleClick(1);
+    handleClick(1, "prev");
     updateButtonStates();
   });
 
@@ -157,7 +182,7 @@ module.exports = function template() {
     if (activeIndex === 5) return;
     // Déclencher l'animation 3D si elle existe (direction: next)
     if (play3DSequence) play3DSequence("next");
-    handleClick(-1);
+    handleClick(-1, "next");
     updateButtonStates();
   });
 
@@ -166,6 +191,8 @@ module.exports = function template() {
       if (i === activeIndex) return;
       // Déterminer la direction selon le clic sur les dots
       const direction = i < activeIndex ? "prev" : "next";
+      // Handle lantern headers for dot clicks
+      handleLanternHeaders(i, direction);
       // Déclencher l'animation 3D si elle existe
       if (play3DSequence) play3DSequence(direction);
       const rotationDirection = i < activeIndex ? 1 : -1;
@@ -202,7 +229,7 @@ module.exports = function template() {
             if (activeIndex > 0) {
               // Déclencher l'animation 3D si elle existe
               if (play3DSequence) play3DSequence("prev");
-              handleClick(1);
+              handleClick(1, "prev");
               updateButtonStates();
             }
           } else {
@@ -210,7 +237,7 @@ module.exports = function template() {
             if (activeIndex < desktopDots.length - 1) {
               // Déclencher l'animation 3D si elle existe
               if (play3DSequence) play3DSequence("next");
-              handleClick(-1);
+              handleClick(-1, "next");
               updateButtonStates();
             }
           }
