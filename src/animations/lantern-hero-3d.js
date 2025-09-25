@@ -51,8 +51,8 @@ module.exports = function offerHero3D() {
     sequenceWrapper.appendChild(loopCanvas);
 
     // Styliser les canvas
-    scrollCanvas.classList.add("baits_3d");
-    loopCanvas.classList.add("baits_3d", "hide");
+    scrollCanvas.classList.add("lantern_3d");
+    loopCanvas.classList.add("lantern_3d", "hide");
 
     let images = [];
     let imagesLoaded = 0;

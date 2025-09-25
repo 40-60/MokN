@@ -207,7 +207,7 @@ module.exports = function template() {
             }
           } else {
             // Swipe vers la gauche: next
-            if (activeIndex < desktopDots.length) {
+            if (activeIndex < desktopDots.length - 1) {
               // Déclencher l'animation 3D si elle existe
               if (play3DSequence) play3DSequence("next");
               handleClick(-1);
