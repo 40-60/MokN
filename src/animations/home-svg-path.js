@@ -10,8 +10,8 @@ module.exports = function homeSvgPathAnimation() {
       Math.round(sectionFeatures.offsetHeight / 16) + 5 + "rem";
   };
 
-  setWrapperHeight();
-  window.addEventListener("resize", setWrapperHeight);
+  // setWrapperHeight();
+  // window.addEventListener("resize", setWrapperHeight);
 
   if (path && pathLight) {
     const length = path.getTotalLength();
