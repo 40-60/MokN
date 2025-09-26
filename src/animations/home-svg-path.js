@@ -5,14 +5,6 @@ module.exports = function homeSvgPathAnimation() {
   const sectionFeatures = document.querySelector("#section-features");
   const pathWrapper = document.querySelector(".line_path_wrapper");
 
-  const setWrapperHeight = () => {
-    pathWrapper.style.height =
-      Math.round(sectionFeatures.offsetHeight / 16) + 5 + "rem";
-  };
-
-  // setWrapperHeight();
-  // window.addEventListener("resize", setWrapperHeight);
-
   if (path && pathLight) {
     const length = path.getTotalLength();
 
@@ -33,7 +25,7 @@ module.exports = function homeSvgPathAnimation() {
       scrollTrigger: {
         trigger: sectionFeatures,
         start: "top bottom",
-        end: "bottom bottom",
+        end: "bottom 70%",
         scrub: true,
         // onUpdate: (self) => {
         //   const percent = Math.round(self.progress * 100);
@@ -53,7 +45,7 @@ module.exports = function homeSvgPathAnimation() {
       scrollTrigger: {
         trigger: sectionFeatures,
         start: "top bottom",
-        end: "bottom bottom",
+        end: "bottom 70%",
         scrub: true,
       },
     });

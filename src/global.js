@@ -33,3 +33,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Prevent flickering for elements with attributes
 gsap.set("[no-flicker]", { visibility: "visible" });
+
+// Remove p-reveal attribute from all elements
+const elementsWithPReveal = document.querySelectorAll("[p-reveal]");
+elementsWithPReveal.forEach((element) => {
+  element.removeAttribute("p-reveal");
+});
+
+if (elementsWithPReveal.length > 0) {
+  console.log(
+    `Removed p-reveal attribute from ${elementsWithPReveal.length} elements`
+  );
+}

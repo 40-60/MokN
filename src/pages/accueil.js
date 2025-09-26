@@ -33,6 +33,7 @@ const VIDEO_SOURCES = {
 // Cache DOM elements
 const hero3dWrapper = document.querySelector(".home_hero_3d_wrapper");
 const navLarge = document.querySelector(".nav-large");
+const navSmall = document.querySelector(".nav-small");
 const textContent = document.querySelector(".hero_home_content");
 // const bobberLight = document.querySelector(".home_hero_bobber_light");
 const loadScreen = document.querySelector(".load-screen") || {
@@ -91,6 +92,10 @@ function triggerUIAnimations(isFirstVisit = true) {
   if (window.innerWidth > 991) {
     setTimeout(() => {
       if (navLarge) navLarge.style.transform = "translateY(0)";
+    }, timings.NAV_DELAY);
+  } else {
+    setTimeout(() => {
+      if (navSmall) navSmall.style.transform = "translateY(0)";
     }, timings.NAV_DELAY);
   }
 
@@ -206,20 +211,11 @@ function initializeHeroVideos() {
 // Initialize hero videos
 initializeHeroVideos();
 
-/**
- * Optimizes cross-fade elements positioning
- */
-// const crossFadeElements = document.querySelectorAll("[cross-fade]");
-// crossFadeElements.forEach((el) => {
-//   el.style.position = "absolute";
-// });
-
-const navSmall = document.querySelector(".nav-small");
-
 // ScrollTrigger animation only for screens above 991px
 if (window.innerWidth > 991) {
   // Set initial opacity to 0
   gsap.set(navSmall, { opacity: 0 });
+  navSmall.style.transform = "translateY(0%)";
 
   gsap.to(navSmall, {
     opacity: 1,
