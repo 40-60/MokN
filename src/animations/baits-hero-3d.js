@@ -4,9 +4,10 @@ module.exports = function offerHero3D() {
   const offersHeroContent = document.querySelectorAll(".offer_hero_content");
 
   // Configuration de la séquence d'images
-  const frameCount = 96; // de 0 à 108
+  const frameCount = 115; // de 0 à 57
   const urls = new Array(frameCount).fill().map((o, i) => {
     return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/baits/reveal/reveal${i}.webp`;
+    // return `http://localhost:3000/img_sequences/baits/reveal/reveal${i}.webp`;
   });
 
   // Fonction pour créer la séquence d'images
@@ -59,11 +60,12 @@ module.exports = function offerHero3D() {
     });
 
     // Configuration de la séquence de boucle
-    const loopFrameCount = 49;
-    const loopFPS = 25; // Définir les FPS souhaités
+    const loopFrameCount = 60;
+    const loopFPS = 24; // Définir les FPS souhaités
     const loopDuration = loopFrameCount / loopFPS; // Calculer la durée
     const loopUrls = new Array(loopFrameCount).fill().map((o, i) => {
       return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/baits/loop/loop${i}.webp`;
+      // return `http://localhost:3000/img_sequences/baits/loop/loop${i}.webp`;
     });
 
     let loopImages = [];
