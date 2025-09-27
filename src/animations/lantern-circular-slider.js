@@ -270,6 +270,7 @@ module.exports = function template() {
     const DURATION = FRAME_COUNT / FPS;
     const BASE_URL =
       "https://cdn.jsdelivr.net/gh/40-60/mokn@master/dist/img_sequences/lantern";
+    // "http://localhost:3000/img_sequences/lantern";
 
     // Fonction utilitaire pour générer les URLs d'une séquence
     const generateSequenceUrls = (sequenceName) => {
