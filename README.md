@@ -49,13 +49,15 @@ Pour ajouter une nouvelle page ou une animation :
 
 Après un push sur GitHub, il se peut que les fichiers du dossier `dist` ne soient pas mis à jour immédiatement sur le CDN jsDelivr.
 
-Pour forcer la purge du cache, rendez-vous à l'adresse suivante :
+Pour forcer la purge du cache manuellement, rendez-vous à l'adresse suivante :
 
-`https://purge.jsdelivr.net/gh/40-60/lesBigBoss@master/dist/[CHEMIN VERS LE FICHIER]`
+`https://purge.jsdelivr.net/gh/40-60/mokn@main/dist/[CHEMIN VERS LE FICHIER]`
 
 Remplacez `[CHEMIN VERS LE FICHIER]` par le chemin du fichier à rafraîchir.
 
-Enfin recharger la même page sur le CDN pour voir si ça a été mis à jour.
+Enfin rechargez la même page sur le CDN pour voir si ça a été mis à jour.
+
+**Recommandation** : Utilisez plutôt les [scripts de purge automatisés](#scripts-de-purge-automatisés) qui sont plus pratiques et gèrent plusieurs fichiers à la fois.
 
 ---
 
@@ -107,6 +109,47 @@ Pour désactiver le mode développement :
 ```js
 localStorage.setItem("devMode", "false");
 ```
+
+---
+
+## Scripts de purge automatisés
+
+Pour faciliter la purge du cache CDN, plusieurs scripts sont disponibles. **Important** : Dans la plupart des cas, vous voulez purger les fichiers du dossier `dist` (fichiers compilés), pas ceux du dossier `src`.
+
+### Purge des fichiers dist (usage principal)
+
+#### Purge complète du dossier dist
+
+```bash
+npm run purge
+# ou
+node purge.js
+```
+
+#### Purge par catégorie (dist)
+
+```bash
+npm run purge:images     # Purge dist/img_sequences
+npm run purge:pages      # Purge dist/pages
+npm run purge:animations # Purge dist/animations
+```
+
+#### Purge spécifique (dist)
+
+```bash
+node purge.js img_sequences/lantern/strong  # Purge dist/img_sequences/lantern/strong
+node purge.js pages animations              # Purge dist/pages et dist/animations
+```
+
+#### Purge de séquences d'images spécifiques (dist)
+
+```bash
+node purge-images.js lantern/strong  # Purge dist/img_sequences/lantern/strong
+node purge-images.js carbon-bg       # Purge dist/img_sequences/carbon-bg
+node purge-images.js baits/loop      # Purge dist/img_sequences/baits/loop
+```
+
+Le script affiche le statut de chaque fichier purgé et un résumé final.
 
 ---
 

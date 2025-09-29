@@ -60,6 +60,11 @@ module.exports = function offerHero3D() {
     const updateScrollImage = function () {
       const currentFrame = Math.round(playhead.frame);
       if (images[currentFrame] && images[currentFrame].complete) {
+        // Log the current displayed image source
+        console.log(
+          `Scroll sequence - Frame ${currentFrame}: ${images[currentFrame].src}`
+        );
+
         // Ajuster la taille du canvas à l'image
         if (
           scrollCanvas.width !== images[currentFrame].width ||
@@ -109,6 +114,11 @@ module.exports = function offerHero3D() {
     const updateLoopImage = () => {
       const currentFrame = Math.round(loopPlayhead.frame);
       if (loopImages[currentFrame] && loopImages[currentFrame].complete) {
+        // Log the current displayed image source
+        console.log(
+          `Loop sequence - Frame ${currentFrame}: ${loopImages[currentFrame].src}`
+        );
+
         if (
           loopCanvas.width !== loopImages[currentFrame].width ||
           loopCanvas.height !== loopImages[currentFrame].height

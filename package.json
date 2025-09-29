@@ -17,7 +17,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack",
-    "dev": "webpack --watch --progress"
+    "dev": "webpack --watch --progress",
+    "purge": "node purge.js",
+    "purge:images": "node purge.js img_sequences",
+    "purge:pages": "node purge.js pages",
+    "purge:animations": "node purge.js animations",
+    "purge:src": "node purge.js --src",
+    "purge:src:images": "node purge.js --src img_sequences",
+    "purge:src:pages": "node purge.js --src pages",
+    "purge:src:animations": "node purge.js --src animations"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^13.0.1",
