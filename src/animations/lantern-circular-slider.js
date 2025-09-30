@@ -276,7 +276,7 @@ module.exports = function template() {
     const generateSequenceUrls = (sequenceName) => {
       return new Array(FRAME_COUNT)
         .fill()
-        .map((_, i) => `${BASE_URL}/${sequenceName}/${sequenceName}${i}.webp`);
+        .map((_, i) => `${BASE_URL}/${sequenceName}/${sequenceName}${i}.png`);
     };
 
     // Générer toutes les URLs
