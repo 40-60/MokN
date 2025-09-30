@@ -103,7 +103,7 @@ module.exports = function lanternCta3d() {
       {
         scrollTrigger: {
           trigger: lanternWrapper,
-          start: "top center",
+          start: "top 60%",
           once: true,
           onEnter: () => {
             console.log(
