@@ -16,19 +16,19 @@ const ANIMATION_TIMINGS = {
   },
 };
 
-// const baseUrl = "https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences";
-const baseUrl = "http://localhost:3000/img_sequences";
+const baseUrl = "https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences";
+// const baseUrl = "http://localhost:3000/img_sequences";
 
 // Video sources configuration
 const VIDEO_SOURCES = {
   home: {
     loop: {
-      mp4: `${baseUrl}/home/home-loop-2.mp4`,
-      mov: `${baseUrl}/home/home-loop-2.mov`,
+      mp4: `${baseUrl}/home/home-loop.mp4`,
+      mov: `${baseUrl}/home/home-loop.mov`,
     },
     intro: {
-      mp4: `${baseUrl}/home/home-intro-2.mp4`,
-      mov: `${baseUrl}/home/home-intro-2.mov`,
+      mp4: `${baseUrl}/home/home-intro.mp4`,
+      mov: `${baseUrl}/home/home-intro.mov`,
     },
   },
 };
