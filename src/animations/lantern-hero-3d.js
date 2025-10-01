@@ -1,32 +1,7 @@
 module.exports = function offerHero3D() {
   const sequenceWrapper = document.querySelector("[baits-3d-wrapper]");
 
-  // if (!sequenceWrapper || !window.gsap || !window.ScrollTrigger) {
-  //   console.warn("Élément .offer_hero_3d, GSAP ou ScrollTrigger non trouvé");
-  //   return;
-  // }
-
   const offersHeroContent = document.querySelectorAll(".offer_hero_content");
-
-  // // Only add absolute class if screen width is over 767px
-  // if (window.innerWidth > 767) {
-  //   offersHeroContent.forEach((content) => {
-  //     content.classList.add("absolute");
-  //   });
-  // }
-
-  // // Add a resize listener to handle responsive behavior
-  // window.addEventListener("resize", () => {
-  //   if (window.innerWidth > 767) {
-  //     offersHeroContent.forEach((content) => {
-  //       content.classList.add("absolute");
-  //     });
-  //   } else {
-  //     offersHeroContent.forEach((content) => {
-  //       content.classList.remove("absolute");
-  //     });
-  //   }
-  // });
 
   // Configuration de la séquence d'images
   const frameCount = 61; // de 0 à 60
@@ -60,11 +35,6 @@ module.exports = function offerHero3D() {
     const updateScrollImage = function () {
       const currentFrame = Math.round(playhead.frame);
       if (images[currentFrame] && images[currentFrame].complete) {
-        // Log the current displayed image source
-        console.log(
-          `Scroll sequence - Frame ${currentFrame}: ${images[currentFrame].src}`
-        );
-
         // Ajuster la taille du canvas à l'image
         if (
           scrollCanvas.width !== images[currentFrame].width ||
@@ -114,11 +84,6 @@ module.exports = function offerHero3D() {
     const updateLoopImage = () => {
       const currentFrame = Math.round(loopPlayhead.frame);
       if (loopImages[currentFrame] && loopImages[currentFrame].complete) {
-        // Log the current displayed image source
-        console.log(
-          `Loop sequence - Frame ${currentFrame}: ${loopImages[currentFrame].src}`
-        );
-
         if (
           loopCanvas.width !== loopImages[currentFrame].width ||
           loopCanvas.height !== loopImages[currentFrame].height

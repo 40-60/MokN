@@ -16,16 +16,19 @@ const ANIMATION_TIMINGS = {
   },
 };
 
+// const baseUrl = "https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences";
+const baseUrl = "http://localhost:3000/img_sequences";
+
 // Video sources configuration
 const VIDEO_SOURCES = {
   home: {
     loop: {
-      mp4: "https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/home/home-loop.mp4",
-      mov: "https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/home/home-loop.mov",
+      mp4: `${baseUrl}/home/home-loop-2.mp4`,
+      mov: `${baseUrl}/home/home-loop-2.mov`,
     },
     intro: {
-      mp4: "https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/home/home-intro.mp4",
-      mov: "https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/home/home-intro.mov",
+      mp4: `${baseUrl}/home/home-intro-2.mp4`,
+      mov: `${baseUrl}/home/home-intro-2.mov`,
     },
   },
 };
@@ -113,7 +116,7 @@ function triggerUIAnimations(isFirstVisit = true) {
  */
 function isFirstVisit() {
   const hasVisited = sessionStorage.getItem("mokn_has_visited");
-  console.log("First visit : ", !hasVisited);
+  // console.log("First visit : ", !hasVisited);
 
   if (!hasVisited) {
     sessionStorage.setItem("mokn_has_visited", "true");
