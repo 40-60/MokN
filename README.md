@@ -1,4 +1,4 @@
-# lesBigBoss
+# MokN
 
 Projet d'intégration d'animations GSAP pour Webflow.
 
@@ -31,8 +31,8 @@ Ouvrez ensuite deux terminaux et lancez les commandes suivantes :
 Vous pouvez consulter l'ensemble des fichiers générés :
 
 - en local sur [http://localhost:3000](http://localhost:3000)
-- ou en ligne sur [https://purge.jsdelivr.net/gh/40-60/lesBigBoss/dist](https://purge.jsdelivr.net/gh/
-  40-60/lesBigBoss/dist)
+- ou en ligne sur [https://purge.jsdelivr.net/gh/40-60/mokn/dist](https://purge.jsdelivr.net/gh/
+  40-60/mokn/dist)
 
 ---
 
@@ -72,7 +72,7 @@ Pour intégrer une animation GSAP dans une page Webflow, ajoutez ce script à l'
 
   globalScript.src = isDev || isPreview
     ? "http://localhost:3000/global.js"
-    : "https://cdn.jsdelivr.net/gh/40-60/lesBigBoss/dist/global.js";
+    : "https://cdn.jsdelivr.net/gh/40-60/mokn/dist/global.js";
 
   document.head.appendChild(globalScript);
   console.log("[Chargement JS] Source :", globalScript.src);
@@ -86,7 +86,7 @@ Et ce script à l'échelle de chaque page :
   script.src =
     window.isDev || window.isPreview
       ? "http://localhost:3000/pages/[NOM DE LA PAGE].js"
-      : "https://cdn.jsdelivr.net/gh/40-60/lesBigBoss/dist/pages/[NOM DE LA PAGE].js";
+      : "https://cdn.jsdelivr.net/gh/40-60/mokn/dist/pages/[NOM DE LA PAGE].js";
   document.head.appendChild(script);
   console.log("[Chargement JS] Source :", script.src);
 </script>
