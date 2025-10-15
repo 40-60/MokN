@@ -62,12 +62,12 @@ function createVideoElement(config) {
   mp4Source.src = config.sources.mp4;
   mp4Source.type = "video/mp4";
 
-  const movSource = document.createElement("source");
-  movSource.src = config.sources.mov;
-  movSource.type = "video/quicktime";
+  // const movSource = document.createElement("source");
+  // movSource.src = config.sources.mov;
+  // movSource.type = "video/quicktime";
 
   video.appendChild(mp4Source);
-  video.appendChild(movSource);
+  // video.appendChild(movSource);
 
   return video;
 }
@@ -80,13 +80,8 @@ function triggerUIAnimations(isFirstVisit = true) {
   console.log("Intro video started - triggering UI animations");
 
   // Select appropriate timing based on visit type
-  const timings = isFirstVisit
-    ? ANIMATION_TIMINGS.FIRST_VISIT
-    : ANIMATION_TIMINGS.RETURN_VISIT;
-  console.log(
-    `Using ${isFirstVisit ? "first visit" : "return visit"} timings:`,
-    timings
-  );
+  const timings = isFirstVisit ? ANIMATION_TIMINGS.FIRST_VISIT : ANIMATION_TIMINGS.RETURN_VISIT;
+  console.log(`Using ${isFirstVisit ? "first visit" : "return visit"} timings:`, timings);
 
   // Immediate opacity change
   if (hero3dWrapper) hero3dWrapper.style.opacity = 1;
@@ -163,10 +158,7 @@ function initializeVideos(config) {
     introVideo.addEventListener("ended", () => {
       introVideo.classList.add("hide");
       loopVideo.play().catch((error) => {
-        console.error(
-          `Failed to play ${logPrefix.toLowerCase()} loop video:`,
-          error
-        );
+        console.error(`Failed to play ${logPrefix.toLowerCase()} loop video:`, error);
       });
     });
 
