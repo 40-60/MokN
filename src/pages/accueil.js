@@ -23,11 +23,11 @@ const baseUrl = "https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences";
 const VIDEO_SOURCES = {
   home: {
     loop: {
-      mp4: `${baseUrl}/home/home-loop.mp4`,
+      mp4: `https://s3.amazonaws.com/webflow-prod-assets/68946a7f9dd4e558382abd0f/68f0ebe420e48fbeb83ce17d_Home-Loop.mp4`,
       mov: `${baseUrl}/home/home-loop.mov`,
     },
     intro: {
-      mp4: `${baseUrl}/home/home-intro.mp4`,
+      mp4: `https://s3.amazonaws.com/webflow-prod-assets/68946a7f9dd4e558382abd0f/68f0ebbc56ac877052407266_Home-Intro.mp4`,
       mov: `${baseUrl}/home/home-intro.mov`,
     },
   },
