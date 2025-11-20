@@ -6,7 +6,7 @@ module.exports = function offerHero3D() {
   // Configuration de la séquence d'images
   const frameCount = 61; // de 0 à 60
   const urls = new Array(frameCount).fill().map((o, i) => {
-    return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/lantern/increase/increase${i}.png`;
+    return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/lantern/increase/increase${i}.avif`;
     // return `http://localhost:3000/img_sequences/lantern/increase/increase${i}.webp`;
   });
 
@@ -64,7 +64,7 @@ module.exports = function offerHero3D() {
     const loopFPS = 25; // Définir les FPS souhaités
     const loopDuration = loopFrameCount / loopFPS; // Calculer la durée
     const loopUrls = new Array(loopFrameCount).fill().map((o, i) => {
-      return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/lantern/strong/strong${i}.png`;
+      return `https://cdn.jsdelivr.net/gh/40-60/mokn/dist/img_sequences/lantern/strong/strong${i}.avif`;
       // return `http://localhost:3000/img_sequences/lantern/strong/strong${i}.webp`;
     });
 
